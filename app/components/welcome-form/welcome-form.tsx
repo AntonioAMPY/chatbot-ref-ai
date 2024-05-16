@@ -8,14 +8,14 @@ import Link from "next/link";
 export function WelcomeForm() {
   return (
     <div
-      className="flex flex-col justify-evenly items-center h-screen gap-y-5"
+      className="flex flex-col justify-around items-center h-screen gap-y-5"
       aria-label="Welcome Form"
     >
       <main
         className="flex flex-col justify-center items-center gap-x-5 gap-y-10"
         role="main"
       >
-        <h1 className="text-4xl font-bold">Welcome to ReflexBot 👋🏼</h1>
+        <h1 className="text-6xl font-bold">Welcome to ReflexBot 👋🏼</h1>
         <div className="flex flex-row justify-center items-center gap-x-10 border-dashed border-4 rounded-sm border-gray-400 px-10 py-20">
           <UserForm />
           <Image
@@ -23,6 +23,7 @@ export function WelcomeForm() {
             alt="Image of Chat ReflexBot"
             width={400}
             height={400}
+            priority
           />
         </div>
       </main>
