@@ -1,7 +1,5 @@
 import Chat from "../components/chat/chat";
 
-export function ChatRoute() {
+export default function ChatRoute() {
   return <Chat />;
 }
-
-export default ChatRoute;

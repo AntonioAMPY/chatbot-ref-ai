@@ -1,5 +1,5 @@
 import { db } from "@/db/connection";
-import { chat } from "@/db/schema/chats";
+import { chats } from "@/db/schema/chats";
 import { NextResponse } from "next/server";
 
 export async function GET(req: Request) {
@@ -10,7 +10,7 @@ export async function POST(req: Request) {
   const { userId, message } = await req.json();
 
   try {
-    const insertedChat = db.insert(chat).values({
+    const insertedChat = db.insert(chats).values({
       id: crypto.randomUUID(),
       user_id: userId,
       message,
