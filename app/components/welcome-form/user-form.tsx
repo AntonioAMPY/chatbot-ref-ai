@@ -7,7 +7,7 @@ export function UserForm() {
     try {
       await addUser(formData);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
   return (

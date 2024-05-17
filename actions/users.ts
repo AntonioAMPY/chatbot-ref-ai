@@ -1,19 +1,27 @@
 "use server";
 
 import { db } from "@/db/connection";
-import { user } from "@/db/schema/user";
-import { revalidatePath } from "next/cache";
+import { users } from "@/db/schema/users";
+import { redirect } from "next/navigation";
 
 export const addUser = async (formData: FormData) => {
-  const name = formData.get("name") as string;
+  const userName = formData.get("name") as string;
+  const userExists = await db.query.users.findMany({
+    where: (users, { eq }) => eq(users.name, userName),
+  });
+  if (!userExists.length) {
+    try {
+      db.insert(users)
+        .values({
+          id: crypto.randomUUID(),
+          name: userName,
+          role_id: 2,
+        })
+        .run();
 
-  db.insert(user)
-    .values({
-      id: crypto.randomUUID() as string,
-      name,
-      role_id: 2,
-    })
-    .run();
-
-  revalidatePath("/chat");
+      } catch (error) {
+        console.error(error);
+      }
+      redirect("/chat");
+  }
 };
