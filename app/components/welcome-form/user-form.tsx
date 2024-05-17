@@ -1,8 +1,17 @@
+import { addUser } from "@/actions/users";
 import Image from "next/image";
 
 export function UserForm() {
+
+  const handleOnSubmit = async (formData: FormData) => {
+    try {
+      await addUser(formData);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
-    <form className="flex flex-col gap-y-5" aria-label="User Name Form">
+    <form action={handleOnSubmit} className="flex flex-col gap-y-5" aria-label="User Name Form">
       <div className="flex flex-col justify-center items-center gap-y-5">
         <label htmlFor="name" className="text-xl font-semibold">
           What&apos;s your name?
