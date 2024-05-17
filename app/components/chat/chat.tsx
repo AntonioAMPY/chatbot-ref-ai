@@ -9,9 +9,9 @@ export function Chat() {
       className="flex flex-col justify-around h-screen gap-x-5"
       aria-label="Chat room"
     >
-      <div className="flex justify-center items-center h-full gap-x-10">
+      <div className="flex justify-center items-center h-full gap-x-10 my-10">
         <Sidebar />
-        <div className="flex flex-col gap-y-10">
+        <div className="flex flex-col justify-end items-center gap-y-10 h-full">
           <main
             className="flex flex-col justify-center items-center gap-x-5 gap-y-10 max-w-md"
             role="main"
