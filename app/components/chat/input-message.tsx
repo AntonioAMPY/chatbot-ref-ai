@@ -9,7 +9,7 @@ export function InputMessage() {
           id="message"
           name="message"
           className="p-2 w-full pl-3 rounded-md"
-          placeholder="Type a message"
+          placeholder="Feeling lost? We've got your back!"
         />
         <button
           type="submit"
