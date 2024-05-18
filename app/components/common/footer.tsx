@@ -1,23 +1,18 @@
-import Link from "next/link";
-import { CircleImage } from "./circle-image";
+import Image from "next/image";
 
 export function Footer() {
   return (
     <footer
-      className="flex flex-row justify-center mt-auto items-center bg-gray-800 text-white py-2 w-full"
+      className="flex flex-row justify-center mt-auto items-center bg-gray-200 text-black py-2 w-full gap-x-2 "
       role="contentinfo"
     >
-      Powered by
-      <CircleImage src="/icons/robot-profile.svg" alt="reflex-robot-image" />
-      <div>
-        <Link
-          href="https://github.com/AntonioAMPY"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          AntonioAMPY
-        </Link>
-      </div>
+      <p className="font-semibold">Powered by</p>
+      <Image
+        width={100}
+        height={80}
+        src="/icons/reflex-ai-logo.svg"
+        alt="reflex-robot-image"
+      />
     </footer>
   );
 }
