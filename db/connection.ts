@@ -4,7 +4,7 @@ import * as chatSchema from "./schema/chats";
 import * as roleSchema from "./schema/roles";
 import * as userSchema from "./schema/users";
 
-const sqlite = new Database("sqlite.db");
+const sqlite = new Database(process.env.DB_PATH);
 
 type schema = typeof chatSchema & typeof roleSchema & typeof userSchema;
 
