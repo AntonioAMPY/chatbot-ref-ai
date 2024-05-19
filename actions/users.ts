@@ -23,5 +23,7 @@ export const addUser = async (formData: FormData) => {
         console.error(error);
       }
       redirect("/chat");
-  }
+    } else {
+      redirect("/chat");
+    }
 };

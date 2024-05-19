@@ -1,11 +1,11 @@
 import { CircleImage } from "../common/circle-image";
 
 interface MessageProps {
-  isBotMessage: boolean;
+  isBotMessage?: boolean;
   message: string;
 }
 
-export function Messages({ isBotMessage, message }: MessageProps) {
+export function Messages({ isBotMessage = false, message }: MessageProps) {
   const conditionalImage = isBotMessage
     ? "/icons/robot-profile.svg"
     : "/icons/cat-user-profile.svg";
