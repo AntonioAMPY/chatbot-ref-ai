@@ -28,6 +28,9 @@ export function Sidebar() {
     try {
       const chats = await getChats(cookieUserId);
       setChats(chats);
+      if (chats.length > 0) {
+        setSelectedChatId(chats[0].id);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -75,7 +78,7 @@ export function Sidebar() {
       </div>
       <div className="flex flex-col justify-center items-center gap-y-2 flex-grow">
         {chats.length > 0 && (
-          <h3 className="text-white font-semibold text-xl">Chats</h3>
+          <h2 className="text-white font-semibold text-xl">Chats</h2>
         )}
         {chats.map((chat) => (
           <button

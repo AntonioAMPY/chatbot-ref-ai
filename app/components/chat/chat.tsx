@@ -1,5 +1,5 @@
 "use client";
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import Footer from "../common/footer";
 import { ChatForm } from "./chat-form";
 import { Sidebar } from "./sidebar";
@@ -9,6 +9,12 @@ import { ChatContext } from "@/app/chat/page";
 
 export function Chat() {
   let { messages } = useContext(ChatContext);
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <div
       className="flex flex-col justify-around h-screen gap-x-5"
@@ -17,9 +23,9 @@ export function Chat() {
       <div className="flex justify-center items-center h-full gap-x-10 my-10">
         <div className="flex h-full bg-white gap-x-2 rounded-sm">
           <Sidebar />
-          <div className="flex flex-col justify-end items-center gap-y-10 h-full pb-10">
+          <div className="flex flex-col justify-end items-center gap-y-10 h-full pb-10 max-h-[87dvh]">
             <main
-              className="flex flex-col justify-center items-center gap-x-5 gap-y-10 max-w-md"
+              className="flex flex-col justify-center items-center gap-x-5 gap-y-10 overflow-y-auto w-full max-w-md"
               role="main"
             >
               {messages?.map((message) => (
@@ -30,6 +36,7 @@ export function Chat() {
                   isBotMessage={message.author === EnumAuthor.BOT}
                 />
               ))}
+              <div ref={messagesEndRef} />
             </main>
             <ChatForm />
           </div>

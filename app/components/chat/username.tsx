@@ -12,7 +12,7 @@ export function UserName({ userName }: UserNameProps) {
         src={"/icons/cat-user-profile-white.svg"}
         alt={"User profile photo - welcome"}
       />
-      <h6>{userName}</h6>
+      <h3>{userName}</h3>
     </div>
   );
 }
