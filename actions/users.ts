@@ -13,17 +13,14 @@ export const addUser = async (formData: FormData) => {
     try {
       db.insert(users)
         .values({
-          id: crypto.randomUUID(),
           name: userName,
           role_id: 2,
         })
         .run();
-
-      } catch (error) {
-        console.error(error);
-      }
-      redirect("/chat");
-    } else {
-      redirect("/chat");
+    } catch (error) {
+      console.error(error);
     }
+  } else {
+    redirect("/chat");
+  }
 };

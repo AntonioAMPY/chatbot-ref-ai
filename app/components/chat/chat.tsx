@@ -1,5 +1,5 @@
 import Footer from "../common/footer";
-import { InputMessage } from "./input-message";
+import { ChatForm } from "./chat-form";
 import { Messages } from "./messages";
 import { Sidebar } from "./sidebar";
 
@@ -30,7 +30,7 @@ export function Chat() {
               }
             />
           </main>
-          <InputMessage />
+          <ChatForm />
         </div>
       </div>
       <Footer />

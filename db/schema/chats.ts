@@ -4,7 +4,7 @@ import { users } from "./users";
 
 
 export const chats = sqliteTable('chats', {
-  id: text('id').primaryKey(),
+  id: text('id').primaryKey().$default(() => crypto.randomUUID()),
   user_id: text('user_id').notNull().references(() => users.id),
   message: text('message'),
   timestamp: integer('timestamp').$default(() => Date.now()),

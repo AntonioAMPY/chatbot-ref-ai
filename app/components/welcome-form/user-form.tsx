@@ -1,11 +1,15 @@
+"use client"
 import { addUser } from "@/actions/users";
 import Image from "next/image";
+import { useRouter } from 'next/navigation';
 
 export function UserForm() {
+  const router = useRouter();
 
   const handleOnSubmit = async (formData: FormData) => {
     try {
       await addUser(formData);
+      router.push('/chat');
     } catch (error) {
       console.error(error);
     }
