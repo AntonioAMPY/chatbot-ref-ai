@@ -18,7 +18,7 @@ export const createChat = async (userId: string) => {
 };
 
 export const getChats = async (userId: string) => {
-  const response = await fetch(`/api/chat/${userId}`);
+  const response = await fetch(`/api/chats/${userId}`);
 
   if (!response.ok) {
     throw new Error("An error occurred while fetching the chats.");
@@ -27,3 +27,15 @@ export const getChats = async (userId: string) => {
   const { chats } = await response.json();
   return chats;
 };
+
+
+export const getChatMessages = async (chatId: string) => {
+  const response = await fetch(`/api/chat/${chatId}`);
+
+  if (!response.ok) {
+    throw new Error("An error occurred while fetching the chat messages.");
+  }
+
+  const { messages } = await response.json();
+  return messages;
+}

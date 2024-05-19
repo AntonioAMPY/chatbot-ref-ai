@@ -1,20 +1,33 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserName } from "./username";
-import { createChat, getChats } from "@/services/chatService";
+import { createChat, getChats, getChatMessages } from "@/services/chatService";
 import { ChatState } from "@/types/Chat";
 import WelcomeUser from "./welcome";
 import { useCookies } from "next-client-cookies";
+import { ChatContext } from "@/app/chat/page";
 
 export function Sidebar() {
+  let { setMessages, setChatId } = useContext(ChatContext);
   const [chats, setChats] = useState<ChatState[]>([]);
   const cookies = useCookies();
   const cookieUserId = cookies.get("userId") || "";
   const cookieUserName = cookies.get("userName") || "";
 
+
   const getUserChats = async () => {
     try {
       const chats = await getChats(cookieUserId);
       setChats(chats);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getUserChatMessages = async (chatId: string) => {
+    setChatId(chatId);
+    try {
+      const messages = await getChatMessages(chatId);
+      setMessages(messages);
     } catch (error) {
       console.error(error);
     }
@@ -42,12 +55,13 @@ export function Sidebar() {
         </button>
       </div>
       <div className="flex flex-col justify-center items-center gap-y-2 flex-grow">
-        {chats.length !== 0 && (
+        {chats?.length !== 0 && (
           <h3 className="text-white font-semibold text-xl">Chats</h3>
         )}
-        {chats.map((chat: ChatState) => (
+        {chats?.map((chat: ChatState) => (
           <button
             key={chat.id}
+            onClick={() => getUserChatMessages(chat.id)}
             className="text-lg font-bold bg-slate-500 hover:bg-slate-700 text-white p-2 rounded-sm"
             aria-label={`Chat from ${new Date(
               chat.timestamp

@@ -5,16 +5,16 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   _: Request,
-  { params }: { params: { userId: string } }
+  { params }: { params: { chatId: string } }
 ) {
   try {
-    const allUserChats = await db.query.chats.findMany({
-      where: (chats, { eq }) => eq(chats.user_id, params.userId),
+    const chatMessages = await db.query.messages.findMany({
+      where: (messages, { eq }) => eq(messages.chat_id, params.chatId),
       orderBy: [asc(chats.timestamp)],
     });
 
     return NextResponse.json({
-      chats: allUserChats,
+      messages: chatMessages,
     });
   } catch (error) {
     return NextResponse.json(

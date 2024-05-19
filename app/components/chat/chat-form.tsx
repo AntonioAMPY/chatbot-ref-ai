@@ -1,24 +1,22 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { addMessage } from "@/services/messageService";
 import { Message } from "@/types/Message";
+import { ChatContext } from "@/app/chat/page";
 
-interface ChatFormProps {
-  onNewMessage: (newMessage: Message) => void;
-}
+export function ChatForm() {
+  let { chatId, setMessages } = useContext(ChatContext);
 
-export function ChatForm({ onNewMessage }: ChatFormProps) {
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const newMessage = await addMessage(
-        "6da87d4e-e4a0-4757-9f17-2cebcc89cb5a",
-        message
-      );
+      const newMessage = await addMessage(chatId, message);
       console.log("newMessage", newMessage);
-      onNewMessage(newMessage);
+      setMessages(
+        (prevMessages: Message[]) => [...prevMessages, newMessage] as Message[]
+      );
       setMessage("");
     } catch (error) {
       console.error("An error occurred while sending the message.", error);
@@ -39,8 +37,8 @@ export function ChatForm({ onNewMessage }: ChatFormProps) {
           type="text"
           id="message"
           name="message"
-          className="p-2 w-full pl-3 rounded-md"
-          placeholder="Feeling lost? We've got your back!"
+          className="py-2 pr-24 pl-4 w-full rounded-md"
+          placeholder="Type a message..."
           value={message}
           onChange={handleChange}
         />

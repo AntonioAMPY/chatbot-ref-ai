@@ -1,33 +1,14 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 import Footer from "../common/footer";
 import { ChatForm } from "./chat-form";
 import { Sidebar } from "./sidebar";
-import { getMessages } from "@/services/messageService";
-import { Message } from "@/types/Message";
 import { Messages } from "./messages";
 import { EnumAuthor } from "@/db/enum/message";
-import { useCookies } from "next-client-cookies";
+import { ChatContext } from "@/app/chat/page";
 
 export function Chat() {
-  const cookies = useCookies();
-  const cookieUserId = cookies.get("userId") || "";
-  const [messages, setMessages] = useState<Message[]>([]);
-
-  const getMessagesService = async () => {
-    const messages = await getMessages(cookieUserId);
-    console.log("mensajes", messages);
-    setMessages(messages);
-  };
-
-  const addNewMessage = (newMessage: Message) => {
-    setMessages((prevMessages) => [...prevMessages, newMessage]);
-  };
-
-  useEffect(() => {
-    getMessagesService();
-  }, []);
-
+  let { messages } = useContext(ChatContext);
   return (
     <div
       className="flex flex-col justify-around h-screen gap-x-5"
@@ -41,16 +22,6 @@ export function Chat() {
               className="flex flex-col justify-center items-center gap-x-5 gap-y-10 max-w-md"
               role="main"
             >
-              {/* <Messages
-                isBotMessage
-                message={"Hello! How can I help you today?"}
-                timestamp={new Date().getTime()}
-              />
-              <Messages
-                isBotMessage
-                message={"I can help you with anything you need."}
-                timestamp={new Date().getTime()}
-              /> */}
               {messages?.map((message) => (
                 <Messages
                   key={message.id}
@@ -60,7 +31,7 @@ export function Chat() {
                 />
               ))}
             </main>
-            <ChatForm onNewMessage={addNewMessage} />
+            <ChatForm />
           </div>
         </div>
       </div>
