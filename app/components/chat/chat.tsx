@@ -6,14 +6,16 @@ import { Sidebar } from "./sidebar";
 import { getMessages } from "@/services/messageService";
 import { Message } from "@/types/Message";
 import { Messages } from "./messages";
-import { useParams } from "next/navigation";
 import { EnumAuthor } from "@/db/enum/message";
+import { useCookies } from "next-client-cookies";
 
 export function Chat() {
+  const cookies = useCookies();
+  const cookieUserId = cookies.get("userId") || "";
   const [messages, setMessages] = useState<Message[]>([]);
 
   const getMessagesService = async () => {
-    // const messages = await getMessages();
+    const messages = await getMessages(cookieUserId);
     console.log("mensajes", messages);
     setMessages(messages);
   };

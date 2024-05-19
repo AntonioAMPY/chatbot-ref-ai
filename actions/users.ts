@@ -2,6 +2,7 @@
 
 import { db } from "@/db/connection";
 import { users } from "@/db/schema/users";
+import { cookies } from "next/headers";
 
 export const addUser = async (userName: string) => {
   try {
@@ -10,6 +11,8 @@ export const addUser = async (userName: string) => {
     });
 
     if (existingUser) {
+      cookies().set("userId", existingUser.id);
+      cookies().set("userName", existingUser.name);
       return;
     }
 
@@ -20,10 +23,14 @@ export const addUser = async (userName: string) => {
         role_id: 2,
       })
       .returning({
-        userId: users.id,
+        id: users.id,
+        userName: users.name,
       });
 
-    return newUser.userId;
+    cookies().set("userId", newUser.id);
+    cookies().set("userName", newUser.userName);
+
+    return newUser.id;
   } catch (error) {
     throw new Error(`An error occurred while creating the user.`);
   }

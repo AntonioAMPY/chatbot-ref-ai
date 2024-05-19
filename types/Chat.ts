@@ -7,3 +7,9 @@ export interface ChatApiResponse {
 export interface Chat {
   chat: ChatApiResponse;
 }
+
+export interface ChatState {
+  id: string;
+  timestamp: number;
+  user_id: string;
+}
