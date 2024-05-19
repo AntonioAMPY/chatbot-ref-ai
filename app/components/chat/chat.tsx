@@ -10,27 +10,29 @@ export function Chat() {
       aria-label="Chat room"
     >
       <div className="flex justify-center items-center h-full gap-x-10 my-10">
-        <Sidebar />
-        <div className="flex flex-col justify-end items-center gap-y-10 h-full">
-          <main
-            className="flex flex-col justify-center items-center gap-x-5 gap-y-10 max-w-md"
-            role="main"
-          >
-            <Messages
-              isBotMessage
-              message={"Hello! How can I help you today?"}
-            />
-            <Messages
-              isBotMessage
-              message={"I can help you with anything you need."}
-            />
-            <Messages
-              message={
-                "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-              }
-            />
-          </main>
-          <ChatForm />
+        <div className="flex h-full bg-white gap-x-2 rounded-sm">
+          <Sidebar />
+          <div className="flex flex-col justify-end items-center gap-y-10 h-full pb-10">
+            <main
+              className="flex flex-col justify-center items-center gap-x-5 gap-y-10 max-w-md"
+              role="main"
+            >
+              <Messages
+                isBotMessage
+                message={"Hello! How can I help you today?"}
+              />
+              <Messages
+                isBotMessage
+                message={"I can help you with anything you need."}
+              />
+              <Messages
+                message={
+                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+                }
+              />
+            </main>
+            <ChatForm />
+          </div>
         </div>
       </div>
       <Footer />

@@ -1,0 +1,25 @@
+"use client";
+import { useFormStatus } from "react-dom";
+import Image from "next/image";
+
+export function SubmitButton() {
+  const { pending } = useFormStatus();
+  
+  return (
+    <button
+      type="submit"
+      disabled={pending}
+      className="flex flex-row justify-center items-center gap-x-5 bg-gray-800 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded-md transition duration-500 ease-in-out transform hover:-translate-y-1 hover:scale-110"
+      aria-label="Start Chatting Button"
+    >
+      <Image
+        src="/icons/speech-bubble.svg"
+        width={30}
+        height={30}
+        alt="bubble-icon"
+        priority
+      />
+      Start Chatting
+    </button>
+  );
+}
