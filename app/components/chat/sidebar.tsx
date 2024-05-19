@@ -1,41 +1,60 @@
 import { useContext, useEffect, useState } from "react";
 import { UserName } from "./username";
 import { createChat, getChats, getChatMessages } from "@/services/chatService";
-import { ChatState } from "@/types/Chat";
-import WelcomeUser from "./welcome";
+import { Chat } from "@/types/Chat";
 import { useCookies } from "next-client-cookies";
 import { ChatContext } from "@/app/chat/page";
+import WelcomeUser from "./welcome";
 
 export function Sidebar() {
-  let { setMessages, setChatId } = useContext(ChatContext);
-  const [chats, setChats] = useState<ChatState[]>([]);
+  const { setMessages, setChatId } = useContext(ChatContext);
+  const [chats, setChats] = useState<Chat[]>([]);
+  const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
   const cookies = useCookies();
   const cookieUserId = cookies.get("userId") || "";
   const cookieUserName = cookies.get("userName") || "";
 
+  useEffect(() => {
+    fetchUserChats();
+  }, []);
 
-  const getUserChats = async () => {
+  useEffect(() => {
+    if (selectedChatId) {
+      fetchChatMessages(selectedChatId);
+    }
+  }, [selectedChatId]);
+
+  async function fetchUserChats() {
     try {
       const chats = await getChats(cookieUserId);
       setChats(chats);
     } catch (error) {
       console.error(error);
     }
-  };
+  }
 
-  const getUserChatMessages = async (chatId: string) => {
+  async function fetchChatMessages(chatId: string) {
     setChatId(chatId);
+    setSelectedChatId(chatId);
     try {
       const messages = await getChatMessages(chatId);
       setMessages(messages);
     } catch (error) {
       console.error(error);
     }
-  };
+  }
 
-  useEffect(() => {
-    getUserChats();
-  }, []);
+  async function handleCreateChat() {
+    try {
+      const chat = await createChat(cookieUserId);
+      setChats((prevChats) => [...prevChats, chat]);
+      setSelectedChatId(chat.id);
+      setChatId(chat.id);
+      setMessages([]);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <aside
@@ -48,21 +67,24 @@ export function Sidebar() {
         <button
           type="button"
           className="bg-[#1d252d] text-[#00bf6f] hover:bg-[#404041] rounded-sm p-2 font-bold w-full"
-          onClick={() => createChat(cookieUserId)}
+          onClick={handleCreateChat}
           aria-label="Create new chat"
         >
           New chat
         </button>
       </div>
       <div className="flex flex-col justify-center items-center gap-y-2 flex-grow">
-        {chats?.length !== 0 && (
+        {chats.length > 0 && (
           <h3 className="text-white font-semibold text-xl">Chats</h3>
         )}
-        {chats?.map((chat: ChatState) => (
+        {chats.map((chat) => (
           <button
             key={chat.id}
-            onClick={() => getUserChatMessages(chat.id)}
-            className="text-lg font-bold bg-slate-500 hover:bg-slate-700 text-white p-2 rounded-sm"
+            type="button"
+            onClick={() => fetchChatMessages(chat.id)}
+            className={`text-lg font-bold p-2 rounded-sm ${
+              chat.id === selectedChatId ? "bg-[#00bf6f] hover:bg-[#069657]" : "bg-slate-500"
+            } hover:bg-slate-700 text-white`}
             aria-label={`Chat from ${new Date(
               chat.timestamp
             ).toLocaleString()}`}

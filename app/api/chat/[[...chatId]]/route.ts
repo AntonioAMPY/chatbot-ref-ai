@@ -38,8 +38,8 @@ export async function POST(req: Request) {
         user_id: userId,
       })
       .returning({
-        chatId: chats.id,
-        userId: chats.user_id,
+        id: chats.id,
+        user_id: chats.user_id,
         timestamp: chats.timestamp,
       });
 

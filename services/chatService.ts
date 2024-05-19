@@ -1,4 +1,5 @@
 import { Chat } from "@/types/Chat";
+import { Message } from "@/types/Message";
 
 export const createChat = async (userId: string) => {
   const response = await fetch("/api/chat", {
@@ -13,7 +14,7 @@ export const createChat = async (userId: string) => {
     throw new Error("An error occurred while creating the chat.");
   }
 
-  const { chat }: Chat = await response.json();
+  const { chat }: { chat: Chat } = await response.json();
   return chat;
 };
 
@@ -24,10 +25,9 @@ export const getChats = async (userId: string) => {
     throw new Error("An error occurred while fetching the chats.");
   }
 
-  const { chats } = await response.json();
+  const { chats }: { chats: Chat[] } = await response.json();
   return chats;
 };
-
 
 export const getChatMessages = async (chatId: string) => {
   const response = await fetch(`/api/chat/${chatId}`);
@@ -36,6 +36,6 @@ export const getChatMessages = async (chatId: string) => {
     throw new Error("An error occurred while fetching the chat messages.");
   }
 
-  const { messages } = await response.json();
+  const { messages }: { messages: Message[] } = await response.json();
   return messages;
-}
+};
