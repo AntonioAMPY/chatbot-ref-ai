@@ -7,21 +7,25 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-  const { userId, message } = await req.json();
+  const { userId } = await req.json();
 
   try {
-    const insertedChat = db.insert(chats).values({
-      id: crypto.randomUUID(),
-      user_id: userId,
-      message,
-    });
+    const [insertedChat] = await db
+      .insert(chats)
+      .values({
+        user_id: userId,
+      })
+      .returning({
+        chatId: chats.id,
+        userId: chats.user_id,
+        timestamp: chats.timestamp,
+      });
 
     return NextResponse.json({
       message: "Chat was created successfully!",
       chat: insertedChat,
     });
   } catch (error) {
-    console.error(error);
     return NextResponse.json({
       error: "An error occurred while creating the chat.",
     });

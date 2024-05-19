@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { CircleImage } from "../common/circle-image";
 
 interface MessageProps {
@@ -6,10 +7,24 @@ interface MessageProps {
 }
 
 export function Messages({ isBotMessage = false, message }: MessageProps) {
+
   const conditionalImage = isBotMessage
     ? "/icons/robot-profile.svg"
     : "/icons/cat-user-profile.svg";
+
   const altText = isBotMessage ? "Bot profile photo" : "User profile photo";
+
+  const ImageComponent = (
+    <div className="flex-shrink-0" role="img" aria-label={altText}>
+      <CircleImage src={conditionalImage} alt={altText} />
+    </div>
+  );
+
+  const TextComponent = (
+    <p className="flex-grow bg-gray-800 text-white font-bold py-2 px-4 rounded-md text-pretty text-right">
+      {message}
+    </p>
+  );
 
   return (
     <div
@@ -19,23 +34,15 @@ export function Messages({ isBotMessage = false, message }: MessageProps) {
       role="presentation"
     >
       {isBotMessage ? (
-        <>
-          <div className="flex-shrink-0" role="img" aria-label={altText}>
-            <CircleImage src={conditionalImage} alt={altText} />
-          </div>
-          <p className="flex-grow bg-gray-800 text-white font-bold py-2 px-4 rounded-md text-pretty text-right">
-            {message}
-          </p>
-        </>
+        <Fragment>
+          {ImageComponent}
+          {TextComponent}
+        </Fragment>
       ) : (
-        <>
-          <p className="flex-grow bg-gray-800 text-white font-bold py-2 px-4 rounded-md text-pretty text-right">
-            {message}
-          </p>
-          <div className="flex-shrink-0" role="img" aria-label={altText}>
-            <CircleImage src={conditionalImage} alt={altText} />
-          </div>
-        </>
+        <Fragment>
+          {TextComponent}
+          {ImageComponent}
+        </Fragment>
       )}
     </div>
   );

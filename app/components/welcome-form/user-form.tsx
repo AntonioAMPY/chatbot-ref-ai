@@ -1,20 +1,39 @@
 "use client";
 import { addUser } from "@/actions/users";
-import { useRouter } from "next/navigation";
 import { SubmitButton } from "./submit.button";
+import { useRouter } from "next/navigation";
+import { Chat } from "@/types/Chat";
 
 export function UserForm() {
+  const route = useRouter();
 
-  const router = useRouter();
+  const createChat = async (userId: string) => {
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    });
+
+    if (!response.ok) {
+      throw new Error("An error occurred while creating the chat.");
+    }
+
+    const data: Chat = await response.json();
+    return data.chat;
+  };
 
   const handleOnSubmit = async (formData: FormData) => {
     try {
-      await addUser(formData);
-      router.push("/chat");
+      const userId = await addUser(formData);
+      const chat = await createChat(userId);
+      route.push(`/chat/${chat.chatId}`);
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
     <form
       action={handleOnSubmit}
