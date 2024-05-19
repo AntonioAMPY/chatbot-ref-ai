@@ -4,10 +4,14 @@ import { CircleImage } from "../common/circle-image";
 interface MessageProps {
   isBotMessage?: boolean;
   message: string;
+  timestamp: number;
 }
 
-export function Messages({ isBotMessage = false, message }: MessageProps) {
-
+export function Messages({
+  isBotMessage = false,
+  message,
+  timestamp,
+}: MessageProps) {
   const conditionalImage = isBotMessage
     ? "/icons/robot-profile.svg"
     : "/icons/cat-user-profile.svg";
@@ -26,24 +30,29 @@ export function Messages({ isBotMessage = false, message }: MessageProps) {
     </p>
   );
 
+  const timestampString = new Date(timestamp).toLocaleString();
+
   return (
-    <div
-      className={`flex px-5 items-start gap-x-2 break-all w-full ${
-        isBotMessage ? "justify-start" : "justify-end"
-      }`}
-      role="presentation"
-    >
-      {isBotMessage ? (
-        <Fragment>
-          {ImageComponent}
-          {TextComponent}
-        </Fragment>
-      ) : (
-        <Fragment>
-          {TextComponent}
-          {ImageComponent}
-        </Fragment>
-      )}
+    <div className="flex flex-col h-full">
+      <div
+        className={`flex px-5 items-center gap-x-2 break-all w-full ${
+          isBotMessage ? "justify-start" : "justify-end"
+        }`}
+        role="presentation"
+      >
+        {isBotMessage ? (
+          <Fragment>
+            {ImageComponent}
+            {TextComponent}
+          </Fragment>
+        ) : (
+          <Fragment>
+            {TextComponent}
+            {ImageComponent}
+          </Fragment>
+        )}
+      </div>
+      <p className="text-sm text-gray-500">{timestampString}</p>
     </div>
   );
 }

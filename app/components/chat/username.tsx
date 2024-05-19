@@ -1,3 +1,4 @@
+"use client";
 import { CircleImage } from "../common/circle-image";
 
 export function UserName() {
