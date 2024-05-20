@@ -22,7 +22,7 @@ export function Messages({
   return (
     <div className="flex flex-col h-full w-full">
       <div
-        className={`flex px-5 items-start gap-x-2 break-all w-full ${
+        className={`flex px-5 items-start gap-x-2 break-words w-full ${
           isBotMessage
             ? "flex-row-reverse justify-end"
             : "flex-row justify-end"

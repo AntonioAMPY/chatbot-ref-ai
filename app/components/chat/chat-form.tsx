@@ -8,9 +8,11 @@ export function ChatForm() {
   let { chatId, setMessages } = useContext(ChatContext);
 
   const [message, setMessage] = useState("");
-
+  const [isSending, setIsSending] = useState(false);
+  
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement | HTMLTextAreaElement> ) => {
     event.preventDefault();
+    setIsSending(true);
     try {
       const newMessage = await addMessage(chatId, message);
       setMessages(
@@ -19,6 +21,8 @@ export function ChatForm() {
       setMessage("");
     } catch (error) {
       console.error("An error occurred while sending the message.", error);
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -56,11 +60,13 @@ export function ChatForm() {
               handleSubmit(event);
             }
           }}
+          disabled={isSending}
         />
         <button
           type="submit"
           className="absolute right-2 top-[50%]"
           style={{ transform: "translate(-50%, -15px)" }}
+          disabled={isSending}
         >
           <Image
             src="/icons/right-arrow-message.svg"

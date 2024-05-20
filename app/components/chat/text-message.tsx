@@ -18,9 +18,7 @@ export function TextMessage({
       } animate-fade-in`}
     >
       <p
-        className={`flex-grow bg-gray-800 text-white font-bold py-2 px-4 rounded-md text-pretty max-w-[80%] ${
-          isBotMessage ? "text-left" : "text-right"
-        }`}
+        className={`bg-gray-800 text-white font-bold py-2 px-4 rounded-md text-pretty max-w-[80%] text-left`}
       >
         {message}
       </p>
