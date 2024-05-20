@@ -1,10 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { Fragment, useContext, useEffect, useState } from "react";
 import { UserName } from "./username";
 import {
   createChat,
   getChats,
-  getChatMessages,
   deleteChat,
+  getChat,
 } from "@/services/chatService";
 import { useCookies } from "next-client-cookies";
 import { ChatContext } from "@/app/chat/page";
@@ -12,6 +12,7 @@ import WelcomeUser from "./welcome";
 import { Chat } from "@/types/Chat";
 import { ChatList } from "./chat-list";
 import Image from "next/image";
+import { getChatMessages } from "@/services/messageService";
 
 export function Sidebar() {
   const { setMessages, setChatId } = useContext(ChatContext);
@@ -46,6 +47,20 @@ export function Sidebar() {
       setIsLoading(false);
     }
   }
+  async function fetchAndUpdateChat(chatId: string) {
+    try {
+      const updatedChat = await getChat(chatId);
+      setChats((prevChats) =>
+        prevChats.map((chat) =>
+          chat.id === chatId
+            ? { ...chat, timestamp: updatedChat.timestamp }
+            : chat
+        )
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   async function fetchChatMessages(chatId: string) {
     setChatId(chatId);
@@ -53,6 +68,7 @@ export function Sidebar() {
     try {
       const messages = await getChatMessages(chatId);
       setMessages(messages);
+      fetchAndUpdateChat(chatId);
     } catch (error) {
       console.error(error);
     }
@@ -114,28 +130,33 @@ export function Sidebar() {
             {chats.length === 0 ? (
               <h2 className="text-white font-semibold text-xl">No chats yet</h2>
             ) : (
-              <h2 className="text-white font-semibold text-xl">Chats</h2>
+              <Fragment>
+                <h2 className="text-white font-semibold text-xl">Chats</h2>
+                {chats.map((chat) => (
+                  <div
+                    key={chat.id}
+                    className="flex flex-row gap-x-2 items-center"
+                  >
+                    <ChatList
+                      key={chat.id}
+                      chat={chat}
+                      selectedChatId={selectedChatId}
+                      fetchChatMessages={fetchChatMessages}
+                    />
+                    <div className="flex bg-white p-2 rounded-sm">
+                      <Image
+                        className="cursor-pointer"
+                        src="/icons/trash-can.svg"
+                        alt="Delete chat icon"
+                        width={27}
+                        height={27}
+                        onClick={() => handleDeleteChat(chat.id)}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </Fragment>
             )}
-            {chats.map((chat) => (
-              <div key={chat.id} className="flex flex-row gap-x-2 items-center">
-                <ChatList
-                  key={chat.id}
-                  chat={chat}
-                  selectedChatId={selectedChatId}
-                  fetchChatMessages={fetchChatMessages}
-                />
-                <div className="flex bg-white p-2 rounded-sm">
-                  <Image
-                    className="cursor-pointer"
-                    src="/icons/trash-can.svg"
-                    alt="Delete chat icon"
-                    width={27}
-                    height={27}
-                    onClick={() => handleDeleteChat(chat.id)}
-                  />
-                </div>
-              </div>
-            ))}
           </>
         )}
       </div>

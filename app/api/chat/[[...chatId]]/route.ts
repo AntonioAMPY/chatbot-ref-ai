@@ -1,7 +1,7 @@
 import { db } from "@/db/connection";
 import { chats } from "@/db/schema/chats";
 import { messages } from "@/db/schema/messages";
-import { asc, eq } from "drizzle-orm";
+import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -9,13 +9,23 @@ export async function GET(
   { params }: { params: { chatId: string } }
 ) {
   try {
-    const chatMessages = await db.query.messages.findMany({
-      where: (messages, { eq }) => eq(messages.chat_id, params.chatId),
-      orderBy: [asc(chats.timestamp)],
+    const chat = await db.query.chats.findFirst({
+      where: (chats, { eq }) => eq(chats.id, params.chatId),
     });
 
+    if (!chat) {
+      return NextResponse.json(
+        {
+          error: "Chat not found.",
+        },
+        {
+          status: 404,
+        }
+      );
+    }
+
     return NextResponse.json({
-      messages: chatMessages,
+      chat,
     });
   } catch (error) {
     return NextResponse.json(
@@ -71,7 +81,7 @@ export async function DELETE(
 ) {
   try {
     await db.delete(messages).where(eq(messages.chat_id, params.chatId));
-    
+
     await db.delete(chats).where(eq(chats.id, params.chatId));
 
     return NextResponse.json(

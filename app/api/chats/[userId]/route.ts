@@ -14,7 +14,7 @@ export async function GET(
       orderBy: [asc(chats.timestamp)],
     });
 
-    const chatsWithFirstAndLastMessage = await Promise.all(
+    const chatsWithFirstMessage = await Promise.all(
       userChats.map(async (chat) => {
         const [firstMessage] = await db.query.messages.findMany({
           where: (messages, { eq }) => eq(messages.chat_id, chat.id),
@@ -22,23 +22,14 @@ export async function GET(
           limit: 1,
         });
 
-        const [lastMessage] = await db.query.messages.findMany({
-          where: (messages, { eq }) => eq(messages.chat_id, chat.id),
-          orderBy: [desc(messages.timestamp)],
-          limit: 1,
-        });
-
         return {
           ...chat,
           firstMessage: firstMessage?.content || "",
-          lastMessage: lastMessage?.content || "",
-          lastMessageTimestamp: lastMessage?.timestamp,
         };
       })
     );
-
     return NextResponse.json({
-      chats: chatsWithFirstAndLastMessage,
+      chats: chatsWithFirstMessage,
     });
   } catch (error) {
     return NextResponse.json(

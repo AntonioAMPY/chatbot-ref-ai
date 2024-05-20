@@ -1,26 +1,32 @@
 import { db } from "@/db/connection";
+import { chats } from "@/db/schema/chats";
 import { messages } from "@/db/schema/messages";
+import { asc } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function GET(
   _: Request,
   { params }: { params: { chatId: string } }
 ) {
-  const chatId = params.chatId;
-  if (!chatId) {
+  try {
+    const chatMessages = await db.query.messages.findMany({
+      where: (messages, { eq }) => eq(messages.chat_id, params.chatId),
+      orderBy: [asc(chats.timestamp)],
+    });
+
+    return NextResponse.json({
+      messages: chatMessages,
+    });
+  } catch (error) {
     return NextResponse.json(
-      { error: "Chat ID is required" },
       {
-        status: 400,
+        error: "An error occurred while fetching the chats.",
+      },
+      {
+        status: 500,
       }
     );
   }
-
-  const chatMessages = await db.query.messages.findMany({
-    where: (messages, { eq }) => eq(messages.chat_id, chatId),
-  });
-
-  return NextResponse.json(chatMessages);
 }
 
 

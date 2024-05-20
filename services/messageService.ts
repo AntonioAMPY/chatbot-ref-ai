@@ -20,3 +20,14 @@ export const addMessage = async (
 
   return response.json();
 };
+
+export const getChatMessages = async (chatId: string) => {
+  const response = await fetch(`/api/messages/${chatId}`);
+
+  if (!response.ok) {
+    throw new Error("An error occurred while fetching the chat messages.");
+  }
+
+  const { messages }: { messages: Message[] } = await response.json();
+  return messages;
+};

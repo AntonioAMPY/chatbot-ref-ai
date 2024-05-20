@@ -28,10 +28,11 @@ export function ChatList({
     >
       <div className="flex flex-row gap-x-2 items-center">
         <span className="overflow-ellipsis overflow-hidden whitespace-nowrap max-w-[150px]">
-          {chat.lastMessage || "No messages yet"} -
+          {chat.firstMessage || "No messages yet"} -
         </span>
-        <span className="text-">
-          {minutesAgo(chat.lastMessageTimestamp ?? Date.now())} minutes ago
+        <span className="text-center">
+          {/* timestamp from the time the chat was created */}
+          {minutesAgo(chat.timestamp)} minutes ago
         </span>
       </div>
     </button>
