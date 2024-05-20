@@ -1,16 +1,26 @@
+"use client";
 import Image from "next/image";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { addMessage } from "@/services/messageService";
 import { Message } from "@/types/Message";
 import { ChatContext } from "@/app/chat/page";
 
 export function ChatForm() {
   let { chatId, setMessages } = useContext(ChatContext);
-
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
-  
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement | HTMLTextAreaElement> ) => {
+
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    if (!isSending) {
+      textAreaRef?.current?.focus();
+    }
+  }, [isSending]);
+
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement | HTMLTextAreaElement>
+  ) => {
     event.preventDefault();
     setIsSending(true);
     try {
@@ -37,6 +47,7 @@ export function ChatForm() {
     >
       <div className="relative rounded-md w-full items-center">
         <textarea
+          ref={textAreaRef}
           id="message"
           name="message"
           className="
@@ -55,7 +66,7 @@ export function ChatForm() {
           value={message}
           onChange={handleChange}
           onKeyDown={(event) => {
-            if (event.key === 'Enter' && !event.shiftKey) {
+            if (event.key === "Enter" && !event.shiftKey) {
               event.preventDefault();
               handleSubmit(event);
             }
