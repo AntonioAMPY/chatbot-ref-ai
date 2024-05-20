@@ -1,15 +1,17 @@
 import { useContext, useEffect, useState } from "react";
 import { UserName } from "./username";
 import { createChat, getChats, getChatMessages } from "@/services/chatService";
-import { Chat } from "@/types/Chat";
 import { useCookies } from "next-client-cookies";
 import { ChatContext } from "@/app/chat/page";
 import WelcomeUser from "./welcome";
+import { minutesAgo } from "@/utils/formatTime";
+import { Chat } from "@/types/Chat";
 
 export function Sidebar() {
-  const { setMessages, setChatId } = useContext(ChatContext);
+  const { setMessages, messages, setChatId } = useContext(ChatContext);
   const [chats, setChats] = useState<Chat[]>([]);
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const cookies = useCookies();
   const cookieUserId = cookies.get("userId") || "";
   const cookieUserName = cookies.get("userName") || "";
@@ -25,6 +27,7 @@ export function Sidebar() {
   }, [selectedChatId]);
 
   async function fetchUserChats() {
+    setIsLoading(true);
     try {
       const chats = await getChats(cookieUserId);
       setChats(chats);
@@ -33,6 +36,8 @@ export function Sidebar() {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -65,36 +70,58 @@ export function Sidebar() {
       role="complementary"
       aria-label="Chat Sidebar"
     >
-      <div className="flex flex-col justify-center items-center gap-y-8">
+      <div className="flex flex-col justify-center items-center gap-y-8 w-80">
         <WelcomeUser />
         <button
           type="button"
-          className="bg-[#1d252d] text-[#00bf6f] hover:bg-[#404041] rounded-sm p-2 font-bold w-full"
+          className={`w-80 bg-[#1d252d] text-[#00bf6f] hover:bg-[#2d2d2e] rounded-sm p-2 font-bold ${
+            isLoading && "bg-gray-600 cursor-not-allowed"
+          }`}
           onClick={handleCreateChat}
           aria-label="Create new chat"
+          disabled={isLoading}
         >
           New chat
         </button>
       </div>
       <div className="flex flex-col justify-center items-center gap-y-2 flex-grow">
-        {chats.length > 0 && (
-          <h2 className="text-white font-semibold text-xl">Chats</h2>
+        {isLoading ? (
+          <div className="flex flex-col justify-center items-center gap-y-2 flex-grow">
+            <div className="w-80 h-10 bg-gray-500 animate-pulse rounded-sm"></div>
+            <div className="w-80 h-10 bg-gray-500 animate-pulse rounded-sm"></div>
+            <div className="w-80 h-10 bg-gray-500 animate-pulse rounded-sm"></div>
+          </div>
+        ) : (
+          <>
+            {chats.length > 0 && (
+              <h2 className="text-white font-semibold text-xl">Chats</h2>
+            )}
+            {chats.map((chat) => (
+              <button
+                key={chat.id}
+                type="button"
+                onClick={() => fetchChatMessages(chat.id)}
+                className={`w-80 text-lg font-bold p-2 rounded-sm ${
+                  chat.id === selectedChatId
+                    ? "bg-[#00bf6f] hover:bg-[#069657]"
+                    : "bg-slate-500"
+                } hover:bg-slate-700 text-white`}
+                aria-label={`Chat from ${new Date(
+                  chat.timestamp
+                ).toLocaleString()}`}
+              >
+                <div className="flex flex-row gap-x-2">
+                  <span className="overflow-ellipsis overflow-hidden whitespace-nowrap max-w-[150px]">
+                    {chat.lastMessage || "No messages yet"} -
+                  </span>
+                  <span className="text-">
+                    {minutesAgo(chat.lastMessageTimestamp ?? 0)} minutes ago
+                  </span>
+                </div>
+              </button>
+            ))}
+          </>
         )}
-        {chats.map((chat) => (
-          <button
-            key={chat.id}
-            type="button"
-            onClick={() => fetchChatMessages(chat.id)}
-            className={`text-lg font-bold p-2 rounded-sm ${
-              chat.id === selectedChatId ? "bg-[#00bf6f] hover:bg-[#069657]" : "bg-slate-500"
-            } hover:bg-slate-700 text-white`}
-            aria-label={`Chat from ${new Date(
-              chat.timestamp
-            ).toLocaleString()}`}
-          >
-            {new Date(chat.timestamp).toLocaleString()}
-          </button>
-        ))}
       </div>
       <UserName userName={cookieUserName} />
     </aside>

@@ -1,6 +1,7 @@
 import { db } from "@/db/connection";
 import { chats } from "@/db/schema/chats";
-import { asc } from "drizzle-orm";
+import { messages } from "@/db/schema/messages";
+import { asc, desc } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -13,8 +14,31 @@ export async function GET(
       orderBy: [asc(chats.timestamp)],
     });
 
+    const chatsWithFirstAndLastMessage = await Promise.all(
+      userChats.map(async (chat) => {
+        const [firstMessage] = await db.query.messages.findMany({
+          where: (messages, { eq }) => eq(messages.chat_id, chat.id),
+          orderBy: [asc(messages.timestamp)],
+          limit: 1,
+        });
+
+        const [lastMessage] = await db.query.messages.findMany({
+          where: (messages, { eq }) => eq(messages.chat_id, chat.id),
+          orderBy: [desc(messages.timestamp)],
+          limit: 1,
+        });
+
+        return {
+          ...chat,
+          firstMessage: firstMessage?.content || "",
+          lastMessage: lastMessage?.content || "",
+          lastMessageTimestamp: lastMessage?.timestamp,
+        };
+      })
+    );
+
     return NextResponse.json({
-      chats: userChats,
+      chats: chatsWithFirstAndLastMessage,
     });
   } catch (error) {
     return NextResponse.json(
@@ -27,4 +51,3 @@ export async function GET(
     );
   }
 }
-
