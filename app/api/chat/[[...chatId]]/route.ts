@@ -1,6 +1,7 @@
 import { db } from "@/db/connection";
 import { chats } from "@/db/schema/chats";
-import { asc } from "drizzle-orm";
+import { messages } from "@/db/schema/messages";
+import { asc, eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -56,6 +57,35 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         error: "An error occurred while creating the chat.",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
+export async function DELETE(
+  _: Request,
+  { params }: { params: { chatId: string } }
+) {
+  try {
+    await db.delete(messages).where(eq(messages.chat_id, params.chatId));
+    
+    await db.delete(chats).where(eq(chats.id, params.chatId));
+
+    return NextResponse.json(
+      {
+        message: "Chat and messages were deleted successfully!",
+      },
+      {
+        status: 200,
+      }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        error: "An error occurred while deleting the chat.",
       },
       {
         status: 500,

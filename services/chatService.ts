@@ -39,3 +39,13 @@ export const getChatMessages = async (chatId: string) => {
   const { messages }: { messages: Message[] } = await response.json();
   return messages;
 };
+
+export const deleteChat = async (chatId: string) => {
+  const response = await fetch(`/api/chat/${chatId}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("An error occurred while deleting the chat.");
+  }
+};

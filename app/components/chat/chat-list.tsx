@@ -26,7 +26,7 @@ export function ChatList({
       } hover:bg-slate-700 text-white`}
       aria-label={`Chat from ${new Date(chat.timestamp).toLocaleString()}`}
     >
-      <div className="flex flex-row gap-x-2">
+      <div className="flex flex-row gap-x-2 items-center">
         <span className="overflow-ellipsis overflow-hidden whitespace-nowrap max-w-[150px]">
           {chat.lastMessage || "No messages yet"} -
         </span>

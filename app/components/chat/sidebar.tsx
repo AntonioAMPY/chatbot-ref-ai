@@ -1,14 +1,20 @@
 import { useContext, useEffect, useState } from "react";
 import { UserName } from "./username";
-import { createChat, getChats, getChatMessages } from "@/services/chatService";
+import {
+  createChat,
+  getChats,
+  getChatMessages,
+  deleteChat,
+} from "@/services/chatService";
 import { useCookies } from "next-client-cookies";
 import { ChatContext } from "@/app/chat/page";
 import WelcomeUser from "./welcome";
 import { Chat } from "@/types/Chat";
 import { ChatList } from "./chat-list";
+import Image from "next/image";
 
 export function Sidebar() {
-  const { setMessages, messages, setChatId } = useContext(ChatContext);
+  const { setMessages, setChatId } = useContext(ChatContext);
   const [chats, setChats] = useState<Chat[]>([]);
   const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -64,6 +70,18 @@ export function Sidebar() {
     }
   }
 
+  async function handleDeleteChat(chatId: string) {
+    try {
+      await deleteChat(chatId);
+      setChats((prevChats) => prevChats.filter((chat) => chat.id !== chatId));
+      setSelectedChatId(null);
+      setChatId("");
+      setMessages([]);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <aside
       className="flex flex-col justify-center items-center bg-slate-950 py-10 px-10 h-full rounded-sm"
@@ -99,12 +117,24 @@ export function Sidebar() {
               <h2 className="text-white font-semibold text-xl">Chats</h2>
             )}
             {chats.map((chat) => (
-              <ChatList
-                key={chat.id}
-                chat={chat}
-                selectedChatId={selectedChatId}
-                fetchChatMessages={fetchChatMessages}
-              />
+              <div key={chat.id} className="flex flex-row gap-x-2 items-center">
+                <ChatList
+                  key={chat.id}
+                  chat={chat}
+                  selectedChatId={selectedChatId}
+                  fetchChatMessages={fetchChatMessages}
+                />
+                <div className="flex bg-white p-2 rounded-sm">
+                  <Image
+                    className="cursor-pointer"
+                    src="/icons/trash-can.svg"
+                    alt="Delete chat icon"
+                    width={27}
+                    height={27}
+                    onClick={() => handleDeleteChat(chat.id)}
+                  />
+                </div>
+              </div>
             ))}
           </>
         )}
