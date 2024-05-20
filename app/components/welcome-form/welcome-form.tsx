@@ -23,6 +23,7 @@ export function WelcomeForm() {
             width={400}
             height={400}
             priority
+            style={{ width: "auto", height: "auto" }}
           />
         </div>
       </main>

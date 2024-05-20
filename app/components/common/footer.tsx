@@ -9,7 +9,7 @@ export function Footer() {
       <p className="font-semibold">Powered by</p>
       <Image
         width={100}
-        height={80}
+        height={13}
         src="/icons/reflex-ai-logo.svg"
         alt="reflex-robot-image"
       />
