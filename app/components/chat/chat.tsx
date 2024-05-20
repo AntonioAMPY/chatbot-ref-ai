@@ -23,9 +23,9 @@ export function Chat() {
       <div className="flex justify-center items-center h-full gap-x-10 my-10">
         <div className="flex h-full bg-white gap-x-2 rounded-sm">
           <Sidebar />
-          <div className="flex flex-col justify-end items-center gap-y-10 h-full pb-10 max-h-[87dvh]">
+          <div className="flex flex-col justify-end items-center gap-y-2 h-full pb-5 max-h-[87dvh]">
             <main
-              className="flex flex-col justify-center items-center gap-x-5 gap-y-10 overflow-y-auto w-full max-w-md"
+              className="flex flex-col justify-center items-center gap-x-5 gap-y-5 overflow-y-auto w-full max-w-md"
               role="main"
             >
               {messages?.map((message) => (
@@ -36,7 +36,7 @@ export function Chat() {
                   isBotMessage={message.author === EnumAuthor.BOT}
                 />
               ))}
-              <div ref={messagesEndRef} />
+              <div className="none" ref={messagesEndRef} />
             </main>
             <ChatForm />
           </div>

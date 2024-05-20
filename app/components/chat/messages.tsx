@@ -1,5 +1,6 @@
-import { Fragment } from "react";
-import { CircleImage } from "../common/circle-image";
+import { TextMessage } from "./text-message";
+import ProfileImageMessage from "./profile-image-message";
+import { timeStampFormat } from "@/utils/formatTime";
 
 interface MessageProps {
   isBotMessage?: boolean;
@@ -18,41 +19,26 @@ export function Messages({
 
   const altText = isBotMessage ? "Bot profile photo" : "User profile photo";
 
-  const ImageComponent = (
-    <div className="flex-shrink-0" role="img" aria-label={altText}>
-      <CircleImage src={conditionalImage} alt={altText} />
-    </div>
-  );
-
-  const TextComponent = (
-    <p className="flex-grow bg-gray-800 text-white font-bold py-2 px-4 rounded-md text-pretty text-right">
-      {message}
-    </p>
-  );
-
-  const timestampString = new Date(timestamp).toLocaleString();
-
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-full">
       <div
-        className={`flex px-5 items-center gap-x-2 break-all w-full ${
-          isBotMessage ? "justify-start" : "justify-end"
+        className={`flex px-5 items-start gap-x-2 break-all w-full ${
+          isBotMessage
+            ? "flex-row-reverse justify-end"
+            : "flex-row justify-end"
         }`}
         role="presentation"
       >
-        {isBotMessage ? (
-          <Fragment>
-            {ImageComponent}
-            {TextComponent}
-          </Fragment>
-        ) : (
-          <Fragment>
-            {TextComponent}
-            {ImageComponent}
-          </Fragment>
-        )}
+        <TextMessage
+          isBotMessage={isBotMessage}
+          message={message}
+          timestampString={timeStampFormat(timestamp)}
+        />
+        <ProfileImageMessage
+          conditionalImage={conditionalImage}
+          altText={altText}
+        />
       </div>
-      <p className="text-sm text-gray-500">{timestampString}</p>
     </div>
   );
 }
