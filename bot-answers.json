@@ -2,31 +2,41 @@
   "responses": [
     {
       "id": 1,
+      "question": "Hello",
+      "answer": "Hi there! How can I help you today?"
+    },
+    {
+      "id": 2,
+      "question": "Thank you",
+      "answer": "You're welcome! Let me know if there's anything else I can assist you with."
+    },
+    {
+      "id": 3,
       "question": "What is emotional intelligence?",
       "answer": "Emotional intelligence (EI) is the ability to identify, understand, and manage emotions. It is an important skill for personal and professional success. People with high EI are often good at building relationships, resolving conflict, and adapting to change."
     },
     {
-      "id": 2,
+      "id": 4,
       "question": "What are the five key components of emotional intelligence?",
       "answer": "The five key components of emotional intelligence are:\n1. Self-awareness: The ability to recognize and understand your own emotions.\n2. Self-regulation: The ability to manage your emotions and impulses.\n3. Motivation: The ability to persist in the face of challenges and setbacks.\n4. Empathy: The ability to understand and share the feelings of others.\n5. Social skills: The ability to build and maintain relationships."
     },
     {
-      "id": 3,
+      "id": 5,
       "question": "Can you give me an example of how emotional intelligence can be used in the workplace?",
       "answer": "Sure. Here is an example of how emotional intelligence can be used in the workplace: A manager with high emotional intelligence is able to recognize that one of their employees is feeling stressed and overwhelmed. The manager takes the time to talk to the employee and understand what is causing the stress. The manager then works with the employee to develop a plan to manage the stress and improve their workload. As a result, the employee is able to stay productive and engaged in their work"
     },
     {
-      "id": 4,
+      "id": 6,
       "question": "How can I improve my emotional intelligence?",
       "answer": "There are many things you can do to improve your emotional intelligence. Here are some strategies:\n1. Practice self-awareness by reflecting on your emotions and behaviors.\n2. Develop self-regulation by finding healthy ways to manage stress and impulses.\n3. Increase your motivation by setting and working towards personal goals.\n4. Cultivate empathy by actively listening to others and trying to understand their perspectives.\n5. Enhance your social skills by improving your communication and relationship-building abilities."
     },
     {
-      "id": 5,
+      "id": 7,
       "question": "How can I manage my anger in a healthy way?",
       "answer": "Identify your anger triggers. Take deep breaths or practice relaxation techniques to calm down before reacting. Express your anger assertively without blaming or attacking others. Engage in healthy activities like exercise to release pent-up emotions."
     },
     {
-      "id": 6,
+      "id": 8,
       "question": "How can emotional intelligence help me in my career?",
       "answer": "Having strong EQ can lead to better communication, collaboration, and conflict resolution in the workplace. It can also help you build stronger relationships with colleagues and clients."
     }

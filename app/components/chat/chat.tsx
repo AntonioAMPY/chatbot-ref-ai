@@ -8,7 +8,7 @@ import { EnumAuthor } from "@/db/enum/message";
 import { ChatContext } from "@/app/chat/page";
 
 export function Chat() {
-  let { messages } = useContext(ChatContext);
+  let { chatId, messages } = useContext(ChatContext);
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export function Chat() {
               className="flex flex-col justify-center items-center gap-x-5 gap-y-5 overflow-y-auto w-full max-w-md"
               role="main"
             >
-              {messages?.length === 0 && (
+              {chatId && messages?.length === 0 && (
                 <p className="text-gray-500">No messages yet</p>
               )}
               {messages?.map((message) => (

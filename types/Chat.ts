@@ -3,6 +3,4 @@ export interface Chat {
   timestamp: number;
   user_id: string;
   firstMessage?: string;
-  lastMessage?: string;
-  lastMessageTimestamp?: number;
 }

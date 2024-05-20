@@ -85,13 +85,13 @@ export function ChatForm() {
               handleSubmit(event);
             }
           }}
-          disabled={isSending}
+          disabled={isSending || !chatId}
         />
         <button
           type="submit"
           className="absolute right-2 top-[50%]"
           style={{ transform: "translate(-50%, -15px)" }}
-          disabled={isSending}
+          disabled={isSending || !chatId || !message}
         >
           <Image
             src="/icons/right-arrow-message.svg"
