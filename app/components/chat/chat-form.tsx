@@ -4,9 +4,11 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { addMessage } from "@/services/messageService";
 import { Message } from "@/types/Message";
 import { ChatContext } from "@/app/chat/page";
+import { getAnswer } from "@/services/answerService";
+import { EnumAuthor } from "@/db/enum/message";
 
 export function ChatForm() {
-  let { chatId, setMessages } = useContext(ChatContext);
+  const { chatId, setMessages } = useContext(ChatContext);
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
 
@@ -18,15 +20,27 @@ export function ChatForm() {
     }
   }, [isSending]);
 
+  const sendMessage = async (message: string, author: EnumAuthor) => {
+    const newMessage = await addMessage(chatId, message, author);
+    if (!newMessage) {
+      throw new Error("An error occurred while sending the message.");
+    }
+    return newMessage;
+  };
+
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement | HTMLTextAreaElement>
   ) => {
     event.preventDefault();
     setIsSending(true);
     try {
-      const newMessage = await addMessage(chatId, message);
+      const newUserMessage = await sendMessage(message, EnumAuthor.USER);
+      const answerBot = await getAnswer(message.trim());
+      const newMessageBot = await sendMessage(answerBot.answer, EnumAuthor.BOT);
+
       setMessages(
-        (prevMessages: Message[]) => [...prevMessages, newMessage] as Message[]
+        (prevMessages: Message[]) =>
+          [...prevMessages, newUserMessage, newMessageBot] as Message[]
       );
       setMessage("");
     } catch (error) {

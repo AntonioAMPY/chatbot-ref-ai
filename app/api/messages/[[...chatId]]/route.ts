@@ -25,7 +25,7 @@ export async function GET(
 
 
 export async function POST(req: Request) {
-  const { chatId, content } = await req.json();
+  const { chatId, content, author } = await req.json();
 
   if (!chatId || !content) {
     return NextResponse.json(
@@ -53,11 +53,13 @@ export async function POST(req: Request) {
     user_id: chatInfo?.user_id,
     chat_id: chatId,
     content,
+    author
   }).returning({
     id: messages.id,
     user_id: messages.user_id,
     timestamp: messages.timestamp,
     content: messages.content,
+    author: messages.author
   });
 
   console.log("newMessage: ", newMessage);
