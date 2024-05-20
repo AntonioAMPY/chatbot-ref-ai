@@ -28,6 +28,9 @@ export function Chat() {
               className="flex flex-col justify-center items-center gap-x-5 gap-y-5 overflow-y-auto w-full max-w-md"
               role="main"
             >
+              {messages?.length === 0 && (
+                <p className="text-gray-500">No messages yet</p>
+              )}
               {messages?.map((message) => (
                 <Messages
                   key={message.id}

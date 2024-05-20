@@ -4,8 +4,8 @@ import { createChat, getChats, getChatMessages } from "@/services/chatService";
 import { useCookies } from "next-client-cookies";
 import { ChatContext } from "@/app/chat/page";
 import WelcomeUser from "./welcome";
-import { minutesAgo } from "@/utils/formatTime";
 import { Chat } from "@/types/Chat";
+import { ChatList } from "./chat-list";
 
 export function Sidebar() {
   const { setMessages, messages, setChatId } = useContext(ChatContext);
@@ -93,32 +93,18 @@ export function Sidebar() {
           </div>
         ) : (
           <>
-            {chats.length > 0 && (
+            {chats.length === 0 ? (
+              <h2 className="text-white font-semibold text-xl">No chats yet</h2>
+            ) : (
               <h2 className="text-white font-semibold text-xl">Chats</h2>
             )}
             {chats.map((chat) => (
-              <button
+              <ChatList
                 key={chat.id}
-                type="button"
-                onClick={() => fetchChatMessages(chat.id)}
-                className={`w-80 text-lg font-bold p-2 rounded-sm ${
-                  chat.id === selectedChatId
-                    ? "bg-[#00bf6f] hover:bg-[#069657]"
-                    : "bg-slate-500"
-                } hover:bg-slate-700 text-white`}
-                aria-label={`Chat from ${new Date(
-                  chat.timestamp
-                ).toLocaleString()}`}
-              >
-                <div className="flex flex-row gap-x-2">
-                  <span className="overflow-ellipsis overflow-hidden whitespace-nowrap max-w-[150px]">
-                    {chat.lastMessage || "No messages yet"} -
-                  </span>
-                  <span className="text-">
-                    {minutesAgo(chat.lastMessageTimestamp ?? 0)} minutes ago
-                  </span>
-                </div>
-              </button>
+                chat={chat}
+                selectedChatId={selectedChatId}
+                fetchChatMessages={fetchChatMessages}
+              />
             ))}
           </>
         )}
