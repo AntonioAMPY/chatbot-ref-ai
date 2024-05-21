@@ -40,6 +40,7 @@ export function Sidebar() {
   }, [cookieUserId, setChats, setSelectedChatId]);
 
   /* A more permanent solution involving backend schema modifications is recommended for future considerations */
+  /* You have to click the chat to update the firstMessage or reload the page (fetchUserChats) */ 
   const fetchChatMessages = useCallback(
     async (chatId: string) => {
       async function fetchAndUpdateChat(chatId: string, messages: Message[]) {

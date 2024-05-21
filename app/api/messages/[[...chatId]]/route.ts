@@ -68,6 +68,5 @@ export async function POST(req: Request) {
     author: messages.author
   });
 
-  console.log("newMessage: ", newMessage);
   return NextResponse.json(newMessage);
 }
