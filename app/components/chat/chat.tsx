@@ -25,7 +25,7 @@ export function Chat() {
           <Sidebar />
           <div className="flex flex-col justify-end items-center gap-y-2 h-full pb-5 max-h-[87dvh]">
             <main
-              className="flex flex-col justify-center items-center gap-x-5 gap-y-5 overflow-y-auto w-full max-w-md"
+              className="flex flex-col justify-start pt-4 items-center gap-x-5 gap-y-5 overflow-y-auto w-full max-w-md"
               role="main"
             >
               {chatId && messages?.length === 0 && (
