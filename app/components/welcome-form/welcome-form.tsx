@@ -18,14 +18,12 @@ export function WelcomeForm() {
         <div className="flex flex-row justify-center items-center gap-x-10 border-dashed border-4 rounded-sm border-gray-400 px-10 py-10">
           <UserForm />
           <Image
-            className="rounded-sm"
             src="/assets/welcome.svg"
             alt="Image of Chat ReflexBot"
-            width={400}
-            height={266}
+            width={472}
+            height={315}
             priority
-            style={{ objectFit: "cover", width: "auto", height: "auto"}}
-          />
+            />
         </div>
       </main>
       <Footer />
