@@ -113,7 +113,7 @@ export function Sidebar() {
 
   return (
     <aside
-      className="flex flex-col justify-center items-center bg-slate-950 py-10 px-10 h-full rounded-sm"
+      className="flex flex-col justify-center items-center bg-slate-950 py-10 px-10 h-full rounded-sm w-[450px]"
       role="complementary"
       aria-label="Chat Sidebar"
     >

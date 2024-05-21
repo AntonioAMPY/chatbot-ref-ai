@@ -5,9 +5,13 @@ import fetchMock from "jest-fetch-mock";
 
 fetchMock.enableMocks();
 
+jest.mock("next/navigation", () => ({
+  useRouter: jest.fn(),
+}));
+
 describe("Sidebar", () => {
   beforeEach(() => {
-    fetchMock.mockResponse(JSON.stringify({ chats: [] })); // adjust this to match the expected response structure
+    fetchMock.mockResponse(JSON.stringify({ chats: [] }));
   });
 
   test("renders the component", async () => {
