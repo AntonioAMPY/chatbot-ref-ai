@@ -10,7 +10,7 @@ const addDefaultRoles = async () => {
   const existingRoles = await db.query.roles.findMany();
 
   if (existingRoles.length) {
-    return;
+    return existingRoles;
   }
 
   const userRole = await db
