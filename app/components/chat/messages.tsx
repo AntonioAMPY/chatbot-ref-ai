@@ -13,11 +13,9 @@ export function Messages({
   message,
   timestamp,
 }: MessageProps) {
-  const conditionalImage = isBotMessage
-    ? "/icons/robot-profile.svg"
-    : "/icons/cat-user-profile.svg";
 
-  const altText = isBotMessage ? "Bot profile photo" : "User profile photo";
+  const profileImage = isBotMessage ? "/icons/robot-profile.svg" : "/icons/cat-user-profile.svg";
+  const altText = `${isBotMessage ? "Bot" : "User"} profile photo`;
 
   return (
     <div className="flex flex-col h-full w-full">
@@ -35,7 +33,7 @@ export function Messages({
           timestampString={timeStampFormat(timestamp)}
         />
         <ProfileImageMessage
-          conditionalImage={conditionalImage}
+          profileImage={profileImage}
           altText={altText}
         />
       </div>
