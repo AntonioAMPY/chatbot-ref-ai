@@ -1,5 +1,5 @@
 import { InferSelectModel } from "drizzle-orm";
-import { text, sqliteTable, integer } from "drizzle-orm/sqlite-core";
+import { text, sqliteTable } from "drizzle-orm/sqlite-core";
 import { EnumRole } from "../enum/role";
 
 export const roles = sqliteTable("roles", {

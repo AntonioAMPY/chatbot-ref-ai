@@ -1,11 +1,37 @@
 "use server";
 
 import { db } from "@/db/connection";
+import { EnumRole } from "@/db/enum/role";
+import { roles } from "@/db/schema/roles";
 import { users } from "@/db/schema/users";
 import { cookies } from "next/headers";
 
+const addDefaultRoles = async () => {
+  const existingRoles = await db.query.roles.findMany();
+
+  if (existingRoles.length) {
+    return;
+  }
+
+  const userRole = await db
+    .insert(roles)
+    .values({
+      name: EnumRole.USER,
+    })
+    .returning({
+      id: roles.id,
+    });
+
+  if (!userRole) {
+    throw new Error(`An error occurred while creating the user role.`);
+  }
+
+  return userRole;
+};
+
 export const addUser = async (userName: string) => {
   try {
+    const [userRole] = await addDefaultRoles() || [];
     const existingUser = await db.query.users.findFirst({
       where: (users, { eq }) => eq(users.name, userName),
     });
@@ -20,7 +46,7 @@ export const addUser = async (userName: string) => {
       .insert(users)
       .values({
         name: userName,
-        role_id: 2,
+        role_id: userRole.id,
       })
       .returning({
         id: users.id,

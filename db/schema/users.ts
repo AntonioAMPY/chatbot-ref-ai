@@ -1,5 +1,5 @@
 import { InferSelectModel } from "drizzle-orm";
-import { text, sqliteTable, integer } from "drizzle-orm/sqlite-core";
+import { text, sqliteTable } from "drizzle-orm/sqlite-core";
 import { roles } from "./roles";
 
 export const users = sqliteTable("users", {
@@ -7,7 +7,7 @@ export const users = sqliteTable("users", {
     .primaryKey()
     .$default(() => crypto.randomUUID()),
   name: text("name").notNull(),
-  role_id: integer("role_id")
+  role_id: text("role_id")
     .notNull()
     .references(() => roles.id),
 });
