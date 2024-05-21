@@ -14,8 +14,10 @@ export function WelcomeForm() {
         className="flex flex-col justify-center items-center gap-x-5 gap-y-10 mt-auto"
         role="main"
       >
-        <h1 className="text-6xl font-bold">Welcome to ReflexBot ✨</h1>
-        <div className="flex flex-row justify-center items-center gap-x-10 border-dashed border-4 rounded-sm border-gray-400 px-10 py-10">
+        <h1 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-6xl font-bold">
+          Welcome to ReflexBot ✨
+        </h1>
+        <div className="flex flex-col md:flex-row justify-center items-center gap-x-10 border-dashed border-4 rounded-sm border-gray-400 px-10 py-10">
           <UserForm />
           <Image
             src="/assets/welcome.svg"
@@ -23,7 +25,7 @@ export function WelcomeForm() {
             width={472}
             height={315}
             priority
-            />
+          />
         </div>
       </main>
       <Footer />

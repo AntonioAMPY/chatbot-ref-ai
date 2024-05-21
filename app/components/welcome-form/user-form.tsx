@@ -19,7 +19,7 @@ export function UserForm() {
   return (
     <form
       action={handleOnSubmit}
-      className="flex flex-col gap-y-5"
+      className="flex flex-col w-full gap-y-5"
       aria-label="User Name Form"
     >
       <div className="flex flex-col justify-center items-center gap-y-5">
