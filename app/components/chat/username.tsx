@@ -27,7 +27,7 @@ export function UserName({ userName }: UserNameProps) {
         <h3 className="font-bold">{userName}</h3>
       </div>
       <button
-        className="flex items-center gap-x-2 hover:border-white hover:border-2 hover:rounded-sm p-1 hover:font-bold"
+        className="flex items-center gap-x-2 hover:border-white hover:rounded-sm hover:font-bold"
         onClick={() => deleteUserCookies()}
       >
         <Image src="/icons/logout.svg" width={28} height={28} alt="logout" />
