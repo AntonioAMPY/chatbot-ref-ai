@@ -1,7 +1,7 @@
 import { db } from "@/db/connection";
 import { chats } from "@/db/schema/chats";
 import { messages } from "@/db/schema/messages";
-import { asc, desc } from "drizzle-orm";
+import { asc } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
 export async function GET(

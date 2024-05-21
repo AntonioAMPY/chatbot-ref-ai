@@ -1,5 +1,4 @@
 "use client";
-
 interface TextMessageProps {
   isBotMessage?: boolean;
   message: string;

@@ -1,5 +1,4 @@
 import Image, { StaticImageData } from "next/image"
-
 interface CircleImageProps {
   src: string | StaticImageData;
   alt: string;

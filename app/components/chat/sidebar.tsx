@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect, useState } from "react";
+import { Fragment, useCallback, useContext, useEffect, useState } from "react";
 import { UserName } from "./username";
 import {
   createChat,
@@ -13,6 +13,7 @@ import { Chat } from "@/types/Chat";
 import { ChatList } from "./chat-list";
 import Image from "next/image";
 import { getChatMessages } from "@/services/messageService";
+import { Message } from "@/types/Message";
 
 export function Sidebar() {
   const { setMessages, setChatId } = useContext(ChatContext);
@@ -23,17 +24,7 @@ export function Sidebar() {
   const cookieUserId = cookies.get("userId") || "";
   const cookieUserName = cookies.get("userName") || "";
 
-  useEffect(() => {
-    fetchUserChats();
-  }, []);
-
-  useEffect(() => {
-    if (selectedChatId) {
-      fetchChatMessages(selectedChatId);
-    }
-  }, [selectedChatId]);
-
-  async function fetchUserChats() {
+  const fetchUserChats = useCallback(async () => {
     setIsLoading(true);
     try {
       const chats = await getChats(cookieUserId);
@@ -46,33 +37,44 @@ export function Sidebar() {
     } finally {
       setIsLoading(false);
     }
-  }
-  async function fetchAndUpdateChat(chatId: string) {
-    try {
-      const updatedChat = await getChat(chatId);
-      setChats((prevChats) =>
-        prevChats.map((chat) =>
-          chat.id === chatId
-            ? { ...chat, timestamp: updatedChat.timestamp }
-            : chat
-        )
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  }, [cookieUserId, setChats, setSelectedChatId]);
 
-  async function fetchChatMessages(chatId: string) {
-    setChatId(chatId);
-    setSelectedChatId(chatId);
-    try {
-      const messages = await getChatMessages(chatId);
-      setMessages(messages);
-      fetchAndUpdateChat(chatId);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  /* A more permanent solution involving backend schema modifications is recommended for future considerations */
+  const fetchChatMessages = useCallback(
+    async (chatId: string) => {
+      async function fetchAndUpdateChat(chatId: string, messages: Message[]) {
+        try {
+          const updatedChat = await getChat(chatId);
+          setChats((prevChats) =>
+            prevChats.map((chat) =>
+              chat.id === chatId
+                ? {
+                    ...chat,
+                    firstMessage: messages.find(
+                      (message) => message.chat_id === chatId
+                    )?.content,
+                    timestamp: updatedChat.timestamp,
+                  }
+                : chat
+            )
+          );
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      setChatId(chatId);
+      setSelectedChatId(chatId);
+      try {
+        const messages = await getChatMessages(chatId);
+        setMessages(messages);
+        fetchAndUpdateChat(chatId, messages);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [setChatId, setSelectedChatId, setMessages, setChats]
+  );
 
   async function handleCreateChat() {
     try {
@@ -97,6 +99,16 @@ export function Sidebar() {
       console.error(error);
     }
   }
+
+  useEffect(() => {
+    fetchUserChats();
+  }, [fetchUserChats]);
+
+  useEffect(() => {
+    if (selectedChatId) {
+      fetchChatMessages(selectedChatId);
+    }
+  }, [selectedChatId, fetchChatMessages]);
 
   return (
     <aside

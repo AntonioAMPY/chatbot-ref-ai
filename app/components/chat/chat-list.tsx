@@ -28,7 +28,7 @@ export function ChatList({
     >
       <div className="flex flex-row gap-x-2 items-center">
         <span className="overflow-ellipsis overflow-hidden whitespace-nowrap max-w-[150px]">
-          {chat.firstMessage || "No messages yet"} -
+          {chat.firstMessage || "Chat"} -
         </span>
         <span className="text-center">
           {/* timestamp from the time the chat was created */}
