@@ -1,15 +1,30 @@
-import React from 'react';
-import Chat from './chat';
-import '@testing-library/jest-dom'
-import { render, screen } from '@testing-library/react';
+import React from "react";
+import "@testing-library/jest-dom";
+import { render, screen } from "@testing-library/react";
+import { ChatList } from "./chat-list";
+import { jest } from "@jest/globals";
 
-describe('Chat component', () => {
-  test('renders chat title and message', () => {
-    render(<Chat />);
-    const titleElement = screen.getByText('Chat with ReflexBot');
-    const messageElement = screen.getByText('Ask me anything!');
-    
-    expect(titleElement).toBeInTheDocument();
-    expect(messageElement).toBeInTheDocument();
+describe("Chat page", () => {
+  test("renders ChatList component", async () => {
+    const chat = {
+      id: "chatId",
+      timestamp: Date.now(),
+      firstMessage: "Hello",
+      user_id: "userId",
+    };
+    const selectedChatId = "selectedChatId";
+    const fetchChatMessages = jest.fn();
+
+    render(
+      <ChatList
+        chat={chat}
+        selectedChatId={selectedChatId}
+        fetchChatMessages={fetchChatMessages}
+      />
+    );
+
+    const buttonText = chat.firstMessage || "Chat";
+    const buttonElement = screen.getByText(buttonText, { exact: false });
+    expect(buttonElement).toBeInTheDocument();
   });
 });

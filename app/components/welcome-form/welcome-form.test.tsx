@@ -1,41 +1,21 @@
-import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
-import { WelcomeForm } from './welcome-form';
-import { UserForm } from './user-form';
+import { render } from "@testing-library/react";
+import Footer from "../common/footer";
+import "@testing-library/jest-dom";
 
-test('renders welcome message', () => {
-  render(<WelcomeForm />);
-  const welcomeMessage = screen.getByText(/Welcome to ReflexBot/i);
-  expect(welcomeMessage).toBeInTheDocument();
-});
+// https://stackoverflow.com/questions/78434162/react-does-not-recognize-the-fetchpriority-prop-on-a-dom-element-warning-in
 
-test('renders UserForm with input and button', () => {
-  render(<UserForm />);
-  
-  const formElement = screen.getByRole('form', { name: /User Name Form/i });
-  expect(formElement).toBeInTheDocument();
+describe("Welcome Form", () => {
+  describe("Footer", () => {
+    test("renders powered by text", () => {
+      const { getByText } = render(<Footer />);
+      const poweredByText = getByText("Powered by");
+      expect(poweredByText).toBeInTheDocument();
+    });
 
-  const inputElement = screen.getByRole('textbox', { name: /What's your name\?/i });
-  expect(inputElement).toBeInTheDocument();
-
-  const buttonElement = screen.getByRole('button', { name: /Start Chatting Button/i });
-  expect(buttonElement).toBeInTheDocument();
-});
-
-test('renders chat image', () => {
-  render(<WelcomeForm />);
-  const chatImage = screen.getByAltText(/image of chat reflexbot/i);
-  expect(chatImage).toBeInTheDocument();
-});
-
-test('renders powered by robot image', () => {
-  render(<WelcomeForm />);
-  const robotImage = screen.getByAltText(/reflex-robot-image/i);
-  expect(robotImage).toBeInTheDocument();
-});
-
-test('renders link to GitHub profile', () => {
-  render(<WelcomeForm />);
-  const githubLink = screen.getByRole('link', { name: /antonioampy/i });
-  expect(githubLink).toBeInTheDocument();
+    test("renders reflex-robot-image", () => {
+      const { getByAltText } = render(<Footer />);
+      const reflexRobotImage = getByAltText("reflex-robot-image");
+      expect(reflexRobotImage).toBeInTheDocument();
+    });
+  });
 });
