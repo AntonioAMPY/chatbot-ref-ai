@@ -1,7 +1,7 @@
 "use client";
 import { useContext, useEffect, useRef } from "react";
 import Footer from "../common/footer";
-import { Sidebar } from "./sidebar";
+import { Sidebar } from "../sidebar/sidebar";
 import { ChatContext } from "@/app/chat/page";
 import { ChatContent } from "./chat-content";
 

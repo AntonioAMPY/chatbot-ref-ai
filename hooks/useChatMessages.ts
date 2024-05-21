@@ -5,7 +5,7 @@ import { getChat } from "@/services/chatService";
 
 export function useChatMessages(selectedChatId: string | null) {
   const { setMessages, setChatId } = useContext(ChatContext);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fetchChatMessages = useCallback(async () => {
     if (!selectedChatId) return;

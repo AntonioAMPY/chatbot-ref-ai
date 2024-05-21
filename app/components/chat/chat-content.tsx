@@ -1,6 +1,6 @@
 import { RefObject } from "react";
 import { Message } from "@/types/Message";
-import { Messages } from "./messages";
+import { Messages } from "../messages/messages";
 import { EnumAuthor } from "@/db/enum/message";
 import { ChatForm } from "./chat-form";
 
