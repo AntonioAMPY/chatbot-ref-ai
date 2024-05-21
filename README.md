@@ -141,4 +141,6 @@ DB_PATH=sqlite.db
 > $ npm run test
 > ```
 
+#### Note: Heads up! Looks like there's a bug with Next.js v14 and React v18 causing this (`fetchPriority` prop on a DOM element isn't recognized by React). I'm keeping the warning/error in place for now, better safe than sorry!
+
 ---
