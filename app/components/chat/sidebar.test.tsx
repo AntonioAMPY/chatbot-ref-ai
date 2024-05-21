@@ -1,17 +1,22 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Sidebar } from "./sidebar";
-import fetch from 'node-fetch';
+import fetchMock from "jest-fetch-mock";
 
-jest.mock('node-fetch', () => jest.fn());
-
+fetchMock.enableMocks();
 
 describe("Sidebar", () => {
-  test("renders the component", () => {
+  beforeEach(() => {
+    fetchMock.mockResponse(JSON.stringify({ chats: [] })); // adjust this to match the expected response structure
+  });
+
+  test("renders the component", async () => {
     render(<Sidebar />);
-    const sidebarElement = screen.getByRole("complementary", {
-      name: "Chat Sidebar",
-    });
+    const sidebarElement = await waitFor(() =>
+      screen.getByRole("complementary", {
+        name: "Chat Sidebar",
+      })
+    );
     expect(sidebarElement).toBeInTheDocument();
   });
 });
