@@ -13,7 +13,6 @@ export function Sidebar() {
   const cookies = useCookies();
   const cookieUserName = cookies.get("userName") || "";
 
-  console.log("isLoading", isLoading);
   return (
     <aside
       className="flex flex-col justify-center items-center bg-slate-950 py-10 px-10 h-full rounded-sm w-[450px]"
