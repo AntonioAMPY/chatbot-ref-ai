@@ -3,7 +3,6 @@
 import { ChatContext } from "@/app/chat/page";
 import { useContext } from "react";
 
-
 export function HamburgerMenu() {
   const { isOpenMenu, toggleMenu } = useContext(ChatContext);
 
@@ -17,15 +16,15 @@ export function HamburgerMenu() {
     >
       <button
         type="button"
-        className="focus:outline-none rounded-md text-white hover:bg-slate-800 border border-transparent p-5 transition-colors duration-200"
+        className="focus:outline-none rounded-md hover:bg-slate-800 border border-transparent p-5"
         aria-label="Toggle menu"
         onClick={() => {
           toggleMenu();
         }}
       >
-        <span className="block w-6 h-px bg-white mb-1"></span>
-        <span className="block w-6 h-px bg-white mb-1"></span>
-        <span className="block w-6 h-px bg-white"></span>
+        <span className="block w-6 h-px bg-violet-500 mb-1"></span>
+        <span className="block w-6 h-px bg-violet-500 mb-1"></span>
+        <span className="block w-6 h-px bg-violet-600"></span>
       </button>
     </nav>
   );

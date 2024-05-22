@@ -19,7 +19,7 @@ export function Sidebar() {
 
   return (
     <aside
-      className={`flex flex-col justify-center bg-slate-950  h-full rounded-sm gap-y-10 ${
+      className={`flex flex-col justify-center bg-slate-950  h-full rounded-sm gap-y-10 transition-all ease-in-out duration-500 ${
         isOpenMenu
           ? "md:w-full sm:w-full items-end py-10 px-10"
           : "w-full items-center py-5 px-5"

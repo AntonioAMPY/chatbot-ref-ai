@@ -27,7 +27,7 @@ export const ChatContext = createContext<ChatContextProps>({
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [chatId, setChatId] = useState("");
-  const [isOpenMenu, setIsOpenMenu] = useState(true)
+  const [isOpenMenu, setIsOpenMenu] = useState(false)
 
   return (
     <ChatContext.Provider
