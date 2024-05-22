@@ -28,6 +28,8 @@
   - [⚙️ Installation](#️-installation)
   - [🤖 Usage](#-usage)
   - [🧪 Tests](#-tests)
+  - [🐱‍👤 UI](#-ui)
+  
 </details>
 <hr>
 
@@ -50,7 +52,6 @@ Users can type their questions, and the chatbot retrieves relevant answers from 
 > * How can I manage my anger in a healthy way?
 > * How can emotional intelligence help me in my career?
 > * Thank you
-
 
 ---
 
@@ -144,3 +145,12 @@ DB_PATH=sqlite.db
 #### Note: Heads up! Looks like there's a bug with Next.js v14 and React v18 causing this (`fetchPriority` prop on a DOM element isn't recognized by React). I'm keeping the warning/error in place for now, better safe than sorry!
 
 ---
+
+### 🐱‍👤 UI
+
+| Desktop | Mobile |
+| ------------- | ------------- |
+| <img src="https://github.com/AntonioAMPY/chatbot-ref-ai/assets/39747272/91f478c8-b51c-4afe-9934-3734e8029581" alt="Desktop-Welcome" />  | <img src="https://github.com/AntonioAMPY/chatbot-ref-ai/assets/39747272/15fcc5d4-5cee-482b-b43b-87a91e6b34f7" alt="Mobile-Welcome"/>  |
+| <img src="https://github.com/AntonioAMPY/chatbot-ref-ai/assets/39747272/f2de1f1d-230f-463d-a777-deb6c8c4b63b" alt="Desktop-Chat" />  | <img src="https://github.com/AntonioAMPY/chatbot-ref-ai/assets/39747272/0b67fa2e-140c-418e-b763-01421cc14620" alt="Mobile-Chat" />  |
+|  <img src="https://github.com/AntonioAMPY/chatbot-ref-ai/assets/39747272/a653385f-533c-4b58-9bb2-fdba97e1152f" alt="Mobile-Menu" /> | <img src="https://github.com/AntonioAMPY/chatbot-ref-ai/assets/39747272/9e5d9150-9433-4dd9-81c8-f5eae582f7aa" alt="Mobile-Menu" /> 
+
