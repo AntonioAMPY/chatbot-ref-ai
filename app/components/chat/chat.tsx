@@ -7,7 +7,7 @@ import { ChatContent } from "./chat-content";
 
 export function Chat() {
   let { chatId, messages } = useContext(ChatContext);
-  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
