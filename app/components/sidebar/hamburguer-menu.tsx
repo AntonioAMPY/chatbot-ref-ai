@@ -12,7 +12,7 @@ export function HamburgerMenu() {
         isOpenMenu
           ? "h-16 justify-end items-center"
           : "h-full items-start justify-center"
-      }}`}
+      }`}
     >
       <button
         type="button"
