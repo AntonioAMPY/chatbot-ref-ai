@@ -1,19 +1,16 @@
 "use client";
 
+import { useChatMessages } from "@/hooks/useChatMessages";
 import { Chat } from "@/types/Chat";
 import { minutesAgo } from "@/utils/formatTime";
 
 interface ChatListProps {
   chat: Chat;
   selectedChatId: string | null;
-  fetchChatMessages: (chatId: string) => void;
 }
 
-export function ChatList({
-  chat,
-  selectedChatId,
-  fetchChatMessages,
-}: ChatListProps) {
+export function ChatList({ chat, selectedChatId }: ChatListProps) {
+  const { fetchChatMessages } = useChatMessages();
   return (
     <button
       key={chat.id}

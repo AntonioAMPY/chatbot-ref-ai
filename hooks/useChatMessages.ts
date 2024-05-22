@@ -1,30 +1,29 @@
-import { useState, useCallback, useEffect, useContext } from "react";
+import { useCallback, useContext, useState } from "react";
 import { getChatMessages } from "@/services/messageService";
 import { ChatContext } from "@/app/chat/page";
 import { getChat } from "@/services/chatService";
 
-export function useChatMessages(selectedChatId: string | null) {
+export function useChatMessages() {
   const { setMessages, setChatId } = useContext(ChatContext);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingChatMessages, setIsLoadingChatMessages] = useState(false)
 
-  const fetchChatMessages = useCallback(async () => {
-    if (!selectedChatId) return;
-    setIsLoading(true);
-    try {
-      const messages = await getChatMessages(selectedChatId);
-      setMessages(messages);
-      const updatedChat = await getChat(selectedChatId);
-      setChatId(updatedChat.id);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [selectedChatId, setMessages, setChatId]);
+  const fetchChatMessages = useCallback(
+    async (selectedChatId: string) => {
+      if (!selectedChatId) return;
+      setIsLoadingChatMessages(true)
+      try {
+        const updatedChat = await getChat(selectedChatId);
+        setChatId(updatedChat.id);
+        const messages = await getChatMessages(selectedChatId);
+        setMessages(messages);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoadingChatMessages(false)
+      }
+    },
+    [setMessages, setChatId]
+  );
 
-  useEffect(() => {
-    fetchChatMessages();
-  }, [fetchChatMessages]);
-
-  return { isLoading, fetchChatMessages };
+  return { isLoadingChatMessages, fetchChatMessages };
 }

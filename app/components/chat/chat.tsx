@@ -4,14 +4,22 @@ import Footer from "../common/footer";
 import { Sidebar } from "../sidebar/sidebar";
 import { ChatContext } from "@/app/chat/page";
 import { ChatContent } from "./chat-content";
+import { useChatMessages } from "@/hooks/useChatMessages";
 
 export function Chat() {
+  const { isLoadingChatMessages, fetchChatMessages } = useChatMessages();
   let { chatId, messages } = useContext(ChatContext);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  useEffect(() => {
+    if (chatId) {
+      fetchChatMessages(chatId);
+    }
+  }, [chatId, fetchChatMessages]);
 
   return (
     <div
@@ -25,6 +33,7 @@ export function Chat() {
             chatId={chatId}
             messages={messages}
             messagesEndRef={messagesEndRef}
+            isLoadingChatMessages={isLoadingChatMessages}
           />
         </div>
       </div>

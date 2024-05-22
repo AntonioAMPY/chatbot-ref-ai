@@ -2,7 +2,6 @@ import { useChats } from "@/hooks/useChats";
 import { UserName } from "./username";
 import WelcomeUser from "./welcome-user";
 import { useCookies } from "next-client-cookies";
-import { useChatMessages } from "@/hooks/useChatMessages";
 import { ChatControls } from "../chat/chat-controls";
 import { ChatListContainer } from "../chat/chat-list-container";
 import { HamburgerMenu } from "./hamburguer-menu";
@@ -10,10 +9,8 @@ import { useContext } from "react";
 import { ChatContext } from "@/app/chat/page";
 
 export function Sidebar() {
-  const { chats, selectedChatId, handleCreateChat, handleDeleteChat } =
-    useChats();
-  const { isLoading, fetchChatMessages } = useChatMessages(selectedChatId);
-  const { isOpenMenu } = useContext(ChatContext);
+  const { chats, handleCreateChat, handleDeleteChat } = useChats();
+  const { isOpenMenu, chatId } = useContext(ChatContext);
   const cookies = useCookies();
   const cookieUserName = cookies.get("userName") || "";
 
@@ -31,13 +28,11 @@ export function Sidebar() {
       {isOpenMenu ? (
         <div className="flex flex-col justify-center items-center gap-y-8 w-80">
           <WelcomeUser />
-          <ChatControls isLoading={isLoading} onCreateChat={handleCreateChat} />
+          <ChatControls onCreateChat={handleCreateChat} />
           <ChatListContainer
-            isLoading={isLoading}
             chats={chats}
-            selectedChatId={selectedChatId}
+            selectedChatId={chatId}
             onDeleteChat={handleDeleteChat}
-            onChatSelect={fetchChatMessages}
           />
         </div>
       ) : null}
