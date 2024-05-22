@@ -79,32 +79,28 @@ Manage Chats:
 
 ### ⚙️ Installation
 
-
-> [!TIP]
->
-> <sub>Use npm or pnpm 🤣</sub>
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
 > 1. Clone the chatbot-ref-ai repository:
 >
 > ```console
 > $ git clone https://github.com/AntonioAMPY/chatbot-ref-ai.git
 > ```
->
 > 2. Change to the project directory:
 > ```console
 > $ cd chatbot-rf-ai
 > ```
->
+
+Feel free to use the option that best suits your needs:
+
+```bash
+npm run install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
 > 3. Install the dependencies:
 > ```console
 > $ npm run install
@@ -113,9 +109,13 @@ bun dev
 > ```console
 > $ npm run db:push
 
+> [!TIP]
+>
+> Use the same package management to run the project 📚
+
 > [!IMPORTANT]
 >
-> <sub>Don't forget to run the  ```npm run db:push```, the application won't work as expected </sub>
+> Don't forget to run the  ```npm run db:push```, the application won't work as expected
 
 ---
 
