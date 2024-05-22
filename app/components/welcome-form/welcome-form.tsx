@@ -17,7 +17,7 @@ export function WelcomeForm() {
         <h1 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-6xl font-bold">
           Welcome to ReflexBot ✨
         </h1>
-        <div className="flex flex-col md:flex-row justify-center items-center gap-x-10 border-dashed border-4 rounded-sm border-gray-400 px-10 py-10">
+        <div className="flex flex-col mx-3 md:flex-row md:mx-0 justify-center items-center gap-x-10 border-dashed border-4 rounded-sm border-gray-400 px-10 py-10">
           <UserForm />
           <Image
             src="/assets/welcome.svg"

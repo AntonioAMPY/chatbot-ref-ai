@@ -73,7 +73,7 @@ export function ChatForm() {
               px-[calc(var(--padding)+(1lh-1ex)/2)] 
               min-h-[calc(1lh+2*var(--padding))] 
               max-h-[calc(4lh+2*var(--padding))]
-              w-[300px] sm:w-[400px]
+              w-[230px] sm:w-[400px]
               resize-none
             "
           placeholder="Ask me about emotional intelligence!"

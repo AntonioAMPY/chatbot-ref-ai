@@ -15,7 +15,7 @@ export const ChatContent = ({
   messages,
   messagesEndRef,
 }: ChatContentProps) => (
-  <div className={`flex flex-col justify-end items-center gap-y-2 h-full pb-5 max-h-[87vh] w-[350px] sm:w-[450px]`}>
+  <div className={`flex flex-col justify-end items-center h-full pb-5 max-h-[87vh] w-[260px] sm:w-[450px] sm:gap-y-2`}>
     <main
       className="flex flex-col justify-start pt-4 items-center gap-x-5 gap-y-5 overflow-y-auto w-full max-w-md"
       role="main"
