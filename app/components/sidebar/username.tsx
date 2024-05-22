@@ -24,7 +24,7 @@ export function UserName({ userName }: UserNameProps) {
   return (
     <div
       className={`flex ${
-        isOpenMenu ? "flex-row" : "flex-col gap-y-5 relative"
+        isOpenMenu ? "flex-row" : "flex-col gap-y-5 relative pb-2"
       } gap-x-2 items-center text-white rounded-sm mt-auto capitalize w-full justify-between`}
       role="contentinfo"
     >

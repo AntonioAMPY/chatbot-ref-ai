@@ -9,7 +9,7 @@ interface DeleteChatProps {
 export function DeleteChat({ chatId, handleDeleteChat }: DeleteChatProps) {
   return (
     <button
-      className="flex bg-white p-2 rounded-sm hover:bg-[#F0F0F0]"
+      className="flex bg-white p-2 rounded-sm hover:bg-[#F0F0F0] h-[44px]"
       onClick={() => handleDeleteChat(chatId)}
     >
       <Image
