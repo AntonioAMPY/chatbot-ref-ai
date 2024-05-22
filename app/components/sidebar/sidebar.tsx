@@ -33,9 +33,23 @@ export function Sidebar() {
             chats={chats}
             selectedChatId={chatId}
             onDeleteChat={handleDeleteChat}
+            isOpenMenu={isOpenMenu}
           />
         </div>
-      ) : null}
+      ) : (
+        <div className="flex flex-col gap-y-5 justify-start h-full">
+          <ChatListContainer
+            chats={chats}
+            isOpenMenu={isOpenMenu}
+            selectedChatId={chatId}
+            onDeleteChat={handleDeleteChat}
+          />
+          <ChatControls
+            isOpenMenu={isOpenMenu}
+            onCreateChat={handleCreateChat}
+          />
+        </div>
+      )}
       <UserName userName={cookieUserName} />
     </aside>
   );

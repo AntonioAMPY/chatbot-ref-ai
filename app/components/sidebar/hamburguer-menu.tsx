@@ -11,7 +11,7 @@ export function HamburgerMenu() {
       className={`flex ${
         isOpenMenu
           ? "h-16 justify-end items-center"
-          : "h-full items-start justify-center"
+          : "h-16 items-start justify-center"
       }`}
     >
       <button
@@ -22,9 +22,9 @@ export function HamburgerMenu() {
           toggleMenu();
         }}
       >
-        <span className="block w-6 h-px bg-violet-500 mb-1"></span>
-        <span className="block w-6 h-px bg-violet-500 mb-1"></span>
-        <span className="block w-6 h-px bg-violet-600"></span>
+        <span className="block w-6 h-px bg-[#00bf6f] mb-1"></span>
+        <span className="block w-6 h-px bg-[#00bf6f] mb-1"></span>
+        <span className="block w-6 h-px bg-[#00bf6f] mb-1"></span>
       </button>
     </nav>
   );

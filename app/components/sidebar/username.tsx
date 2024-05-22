@@ -24,11 +24,11 @@ export function UserName({ userName }: UserNameProps) {
   return (
     <div
       className={`flex ${
-        isOpenMenu ? "flex-row" : "flex-col gap-y-5 relative pb-2"
+        isOpenMenu ? "flex-row" : "flex-col gap-y-5 relative mt-5 pb-2 border-b-2 border-white"
       } gap-x-2 items-center text-white rounded-sm mt-auto capitalize w-full justify-between`}
       role="contentinfo"
     >
-      <div className="flex items-center gap-x-2">
+      <div className="flex items-center gap-x-2 cursor-pointer">
         <CircleImage
           src={"/icons/cat-user-profile-white.svg"}
           alt={"User profile photo - welcome"}

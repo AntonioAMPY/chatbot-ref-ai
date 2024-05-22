@@ -2,36 +2,35 @@
 
 import { useChatMessages } from "@/hooks/useChatMessages";
 import { Chat } from "@/types/Chat";
-import { minutesAgo } from "@/utils/formatTime";
+import { Fragment } from "react";
+import { ChatButton } from "./chat-button";
 
 interface ChatListProps {
   chat: Chat;
   selectedChatId: string | null;
+  isOpenMenu: boolean;
 }
 
-export function ChatList({ chat, selectedChatId }: ChatListProps) {
+export function ChatList({ chat, selectedChatId, isOpenMenu }: ChatListProps) {
   const { fetchChatMessages } = useChatMessages();
   return (
-    <button
-      key={chat.id}
-      type="button"
-      onClick={() => fetchChatMessages(chat.id)}
-      className={`w-80 text-lg font-bold p-2 rounded-sm ${
-        chat.id === selectedChatId
-          ? "bg-[#00bf6f] hover:bg-[#069657]"
-          : "bg-slate-500"
-      } hover:bg-slate-700 text-white`}
-      aria-label={`Chat from ${new Date(chat.timestamp).toLocaleString()}`}
-    >
-      <div className="flex flex-row gap-x-2 items-center">
-        <span className="overflow-ellipsis overflow-hidden whitespace-nowrap max-w-[150px]">
-          {chat.firstMessage || "Chat"} -
-        </span>
-        <span className="text-center">
-          {/* timestamp from the time the chat was created */}
-          {minutesAgo(chat.timestamp)} minutes ago
-        </span>
-      </div>
-    </button>
+    <Fragment>
+      {isOpenMenu ? (
+        <ChatButton
+          chat={chat}
+          selectedChatId={selectedChatId}
+          width="w-80"
+          fetchChatMessages={fetchChatMessages}
+          showTimestamp
+        />
+      ) : (
+        <ChatButton
+          chat={chat}
+          selectedChatId={selectedChatId}
+          width="w-[50px]"
+          fetchChatMessages={fetchChatMessages}
+        />
+      )}
+    </Fragment>
   );
 }
