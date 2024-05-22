@@ -9,18 +9,25 @@ interface ChatContextProps {
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
   chatId: string;
   setChatId: (chatId: string) => void;
+  isOpenMenu : boolean;
+  setIsOpenMenu: (isOpenMenu: boolean) => void;
+  toggleMenu: () => void;
 }
 
 export const ChatContext = createContext<ChatContextProps>({
-  messages: [],
   setMessages: () => {},
+  messages: [],
   setChatId: () => {},
   chatId: "",
+  setIsOpenMenu: () => {},
+  isOpenMenu: false,
+  toggleMenu: () => {},
 });
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [chatId, setChatId] = useState("");
+  const [isOpenMenu, setIsOpenMenu] = useState(true)
 
   return (
     <ChatContext.Provider
@@ -29,6 +36,11 @@ export default function ChatPage() {
         setMessages,
         setChatId,
         chatId,
+        isOpenMenu,
+        setIsOpenMenu,
+        toggleMenu: () => {
+          setIsOpenMenu(!isOpenMenu);
+        },
       }}
     >
       <Chat />
