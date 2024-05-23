@@ -127,7 +127,7 @@ bun install
 DB_PATH=sqlite.db
 ```
 
-> 2. Run development enviroment
+> 2. Run development environment
 > ```console
 > $ npm run dev
 > ```
