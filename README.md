@@ -58,25 +58,24 @@ Users can type their questions, and the chatbot retrieves relevant answers from 
 ## 🧩 Features
 
 
-Get started
+### Ready to go
 * Create a user profile
 
-Engage with ReflexBot
+### Engage with ReflexBot
 * Start a new chat
 * Chat with ReflexBot
 
-Manage Chats:
+### Manage Chats:
 * View past conversations
 * Delete conversations
 
 ---
 
-
 ## 🚀 Getting Started
 
 **System Requirements:**
 
-* **Node**: `v20.13.1 (LTS)`
+**Node**: `v20.13.1 (LTS)`
 
 ### ⚙️ Installation
 
